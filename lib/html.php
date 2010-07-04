@@ -26,12 +26,6 @@ class body implements html
 			      <input id="area4" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text">
 			     </td>
 			    </tr>
-			    <tr>
-			     <td class="block2">Приоритет: </td>
-			     <td align="right">
-			      <select class="input" id="priority"><option DISABLED SELECTED>--</option>';$main->LoadPriority();echo '</select>
-			     </td>
-			    </tr>
 			   </table>
 			   <table class="t2" id="t2" border="0" cellpadding="0" cellspacing="0" align="center">
 			    <tr>

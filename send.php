@@ -5,7 +5,6 @@ if($_SERVER['HTTP_X_REQUESTED_WITH'] == "XMLHttpRequest" &&
 	!empty($_POST['a3']) && 
 	!empty($_POST['a4']) && 
 	!empty($_POST['a5']) && 
-	!empty($_POST['a6']) && 
 	!empty($_POST['sql']))
 {
 	require_once("config.php");
@@ -21,14 +20,12 @@ if($_SERVER['HTTP_X_REQUESTED_WITH'] == "XMLHttpRequest" &&
 	$a3 = $_POST['a3'];
 	$a4 = $_POST['a4'];
 	$a5 = $_POST['a5'];
-	$a6 = $_POST['a6'];
 
 	$area1 = htmlspecialchars(addslashes($a1), ENT_QUOTES);
 	$area2 = htmlspecialchars(addslashes($a2), ENT_QUOTES);
 	$area3 = htmlspecialchars(addslashes($a3), ENT_QUOTES);
 	$area4 = htmlspecialchars(addslashes($a4), ENT_QUOTES);
 	$area5 = htmlspecialchars(addslashes($a5), ENT_QUOTES);
-	$area6 = htmlspecialchars(addslashes($a6), ENT_QUOTES);
 
 	$id = $main->GetNewId();
 	$opt = explode("*",$op);
@@ -46,7 +43,7 @@ if($_SERVER['HTTP_X_REQUESTED_WITH'] == "XMLHttpRequest" &&
 	}while($opt[$i]);
 
 	$query = substr($query, 0, strlen($query)-1);
-	if(!$sql->exe($cfg->get("realmd"),"INSERT INTO `bt_message` (`id`,`account`,`sender`,`title`,`priority`,`date`,`text_1`,`text_2`,`text_3`) VALUES ('".$id."','".$area5."','".$row[0]."','".$area4."','".$area6."','".$date."','".$area1."','".$area2."','".$area3."')"))
+	if(!$sql->exe($cfg->get("realmd"),"INSERT INTO `bt_message` (`id`,`account`,`sender`,`title`,`priority`,`date`,`text_1`,`text_2`,`text_3`) VALUES ('".$id."','".$area5."','".$row[0]."','".$area4."','1','".$date."','".$area1."','".$area2."','".$area3."')"))
 	{
 		echo 'Таблица `bt_message` недоступна или повреждена! Данные не записаны!';
 		$t1 = false;
