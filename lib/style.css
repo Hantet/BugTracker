@@ -1,0 +1,124 @@
+body {
+padding: 0;
+margin: 0;
+background-color: #000;
+}
+hr.ruler {
+height: 1px;
+margin: 0;
+padding: 0;
+border-top: 0;
+border-bottom: 1px dashed #000;
+}
+a {
+color: #FFF;
+text-decoration: none;
+}
+a:hover {
+color: #CCC;
+text-decoration: underline;
+}
+img {
+border: 0;
+}
+form {
+padding: 0;
+margin: 0;
+}
+input {
+border: 0;
+}
+button {
+border: 0;
+}
+#b1 {
+background-color: #666;
+border: 1px;
+border-style: solid;
+border-color: #888;
+width: 700px;
+position: relative;
+top: 40px;
+}
+#t1 {
+margin: 15px;
+width: 670px;
+}
+#t1 tr td.block {
+color: #FFF;
+border-color: #000;
+vertical-align: top;
+}
+#t1 tr td.mini {
+padding: 5px;
+color: #FFF;
+border: 1px;
+border-style: solid;
+border-color: #000;
+vertical-align: top;
+}
+#t1 tr td.view {
+padding: 0px 0px 0px 5px;
+color: #FFF;
+border-color: #000;
+vertical-align: top;
+}
+.textarea {
+overflow: hidden;
+padding: 5px;
+margin: 0;
+width: 400px;
+height:160px;
+border: 0px;
+background-color: #999;
+color: #000;
+}
+.t2 {
+color: #FFF;
+width: 100%;
+}
+.t2 tr td.block2 {
+padding: 0px 0px 0px 5px;
+}
+.input {
+width: 140px;
+}
+.butt {
+width: 140px;
+height: 18px;
+background-color: #C0C0C0;
+color: #000;
+text-align: center;
+cursor: pointer;
+}
+#link {
+padding: 0px 0px 0px 5px;
+color: #FFF;
+}
+.border {
+width: 668px;
+height: 30px;
+margin: 15px;
+color: #FFF;
+border: 1px black solid;
+text-align:left;
+}
+#hellotxt {
+padding: 5px;
+}
+.pad {
+padding: 0px 5px 0px 5px;
+}
+.statusborder {
+width: 655px;
+height: 5px;
+border: 1px;
+border-color: #006400;
+border-style: solid;
+}
+#namelimit1 {
+position: relative;
+width: 175px;
+height: 19px;
+overflow: hidden;
+}
