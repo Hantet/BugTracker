@@ -30,10 +30,10 @@ class config
 		"title"			=> "Баг-трекер",
 		"mingm"			=> "3",
 		"pagepath"		=> "pages/",
-		"main"			=> "http://bug",
-		"anim"			=> true,
-		"LinkAccount"	=> "http://yoursite.ru/admin/account.php?id=",
-		"LinkPlayer"	=> "http://yoursite.ru/admin/player.php?guid=",
+		"main"			=> "http://localhost",
+		"anim"			=> false,
+		"LinkAccount"	=> "http://localhost/admin/account.php?id=",
+		"LinkPlayer"	=> "http://localhost/admin/player.php?guid=",
 		/*##################################################################################################
 		## Announce of updates
 		##		CheckVersion:	Check new version in git page of project (boolean).
@@ -41,8 +41,8 @@ class config
 		##		checkdiff:		Different in days for recheck updates.
 		##		defaultdate:	Current php time-zone of server.
 		##################################################################################################*/
-		"CheckVersion"	=> true,
-		"version"		=> "12",
+		"CheckVersion"	=> false,
+		"version"		=> "13",
 		"checkdiff"		=> 2,
 		"defaultdate"	=> date_default_timezone_set('Europe/Moscow'));
 		
