@@ -250,12 +250,16 @@ class main implements create
 	{
 		$cfg = new config;
 		$sql = new sql;
+		global $user;
 		$u=0;
 		echo '<div id="link">';
 		while($row=$sql->fetch($opt))
 		{
-			echo '<div id="unic'.$u.'"><a href="javascript:viewdiv('.$u.')"><span style="position:relative;top:2px;" title="Просмотр"><img src="img/lens.png"></a></span> ['.$this->GetNameByGUID(intval($row['guid'])).'] <a target="_blank" href="'.$row['link'].'">'.$row['name'].'</a><br></div>';
-			echo '<div id="save'.$u.'" style="display:none;">'.$row['guid'].'^'.$row['map'].'^'.$row['zone'].'^'.$row['type'].'^'.$row['name'].'^'.$row['link'].'</div>';
+			$name = $this->GetNameByGUID(intval($row['guid']));
+			if($user['gmlevel'] >= $cfg->get("mingm"))
+				$name = '<a href="'.$cfg->get("LinkPlayer").intval($row['guid']).'">'.$name.'</a>';
+			echo '<div id="unic'.$u.'"><a href="javascript:viewdiv('.$u.')"><span style="position:relative;top:2px;" title="Просмотр"><img src="img/lens.png"></a></span> ['.$name.'] <a target="_blank" href="'.$row['link'].'">'.$row['name'].'</a><br></div>';
+			echo '<div id="save'.$u.'" style="display:none;">'.$row['method'].'^'.$row['guid'].'^'.$row['type'].'^'.$row['map'].'^'.$row['zone'].'^'.$row['name'].'^'.$row['link'].'</div>';
 			$u++;
 		}
 		echo '</div>';

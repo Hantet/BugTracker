@@ -35,6 +35,7 @@ CREATE TABLE `bt_message` (
 DROP TABLE IF EXISTS `bt_options`;
 CREATE TABLE `bt_options` (
   `id` int(11) NOT NULL,
+  `method` int(11) NOT NULL DEFAULT 2,
   `guid` int(11) NOT NULL,
   `map` int(11) NOT NULL,
   `zone` int(11) NOT NULL,

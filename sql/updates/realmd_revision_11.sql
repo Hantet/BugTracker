@@ -1,0 +1,1 @@
+ALTER TABLE `bt_options` ADD COLUMN `method` int(11) NOT NULL DEFAULT 2 AFTER `id`;

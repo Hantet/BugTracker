@@ -31,41 +31,41 @@ class body implements html
 			    <tr>
 			     <td class="block2">Персонаж: </td>
 			     <td align="right">
-			      <select class="input" onchange="menu(0)" id="player"><option DISABLED SELECTED>--</option>';$main->LoadChar($user['id']);echo '</select>
-			     </td>
-			    </tr>
-			    <tr id="var0" style="display:none;">
-			     <td class="block2">Местность: </td>
-			     <td align="right">
-			      <select class="input" onchange="ChangeZones(this.options[this.selectedIndex].value);menu(1)" id="map"><option DISABLED SELECTED>--</option>';$main->LoadMap();echo '</select>
+			      <select class="input" onchange="next(0)" id="player"><option DISABLED SELECTED>--</option>';$main->LoadChar($user['id']);echo '</select>
 			     </td>
 			    </tr>
 			    <tr id="var1" style="display:none;">
-			     <td class="block2">Зона: </td>
+			     <td class="block2">Тип: </td>
 			     <td align="right">
-			      <select class="input" onchange="menu(2)" id="zone"></select>
+			      <select class="input" onchange="next(1)" id="type"><option DISABLED SELECTED>--</option>';$main->LoadSection();echo '</select>
 			     </td>
 			    </tr>
 			    <tr id="var2" style="display:none;">
-			     <td class="block2">Тип: </td>
+			     <td class="block2">Местность: </td>
 			     <td align="right">
-			      <select class="input" onchange="menu(3)" id="type"><option DISABLED SELECTED>--</option>';$main->LoadSection();echo '</select>
+			      <select class="input" onchange="ChangeZones(this.options[this.selectedIndex].value);next(2)" id="map"><option DISABLED SELECTED>--</option>';$main->LoadMap();echo '</select>
 			     </td>
 			    </tr>
 			    <tr id="var3" style="display:none;">
+			     <td class="block2">Зона: </td>
+			     <td align="right">
+			      <select class="input" onchange="next(3)" id="zone"></select>
+			     </td>
+			    </tr>
+			    <tr id="var4" style="display:none;">
 			     <td class="block2">Название: </td>
 			     <td align="right">
 			      <input id="name" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text">
 			     </td>
 			    </tr>
-			    <tr id="var4" style="display:none;">
+			    <tr id="var5" style="display:none;">
 			     <td class="block2">Wowhead ссылка: </td>
 			     <td align="right">
 			      <input id="db" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text">
 			     </td>
 			    </tr> 
 			   </table>
-			   <div align="right"><div id="var5" class="butt" style="display:none;" onClick="tolink()"><span id="retype">Добавить</span></div></div>
+			   <div align="right"><div id="var6" class="butt" style="display:none;" onClick="tolink()"><span id="retype">Добавить</span></div></div>
 			   <div id="link"></div>
 			   <div id="saveblock" style="display:none;"></div>
 			   <div align="right"><span id="ajaximg" style="visibility:hidden;"><img src="img/1.gif"></span></div>
@@ -176,50 +176,49 @@ class body implements html
 			  <td width="400px" class="block"><div class="pad">Сейчас так:</div>
 			   <textarea class="textarea" id="area1" style="height:80px;" READONLY>'.$all['text_1'].'</textarea><div class="pad">А должно быть так:</div>
 			   <textarea class="textarea" id="area2" style="height:80px;" READONLY>'.$all['text_2'].'</textarea><div class="pad">Пояснение:</div>
-			   <textarea class="textarea" id="area3" READONLY>'.$all['text_3'].'</textarea>
+			   <textarea class="textarea" id="area3" READONLY>'.$all['text_2'].'</textarea>
 			  </td>
 			  <td class="block">
 			   <table class="t2" id="t2" border="0" cellpadding="0" cellspacing="0" align="center">
-			    <tr id="var" style="display:none;">
+			    <tr style="display:none;">
 			     <td class="block2">Персонаж: </td>
 			     <td align="right">
-			      <select class="input" id="player"><option DISABLED SELECTED>--</option>';$main->LoadChar($all['account']);echo '</select>
-			     </td>
-			    </tr>
-			    <tr id="var0" style="display:none;">
-			     <td class="block2">Местность: </td>
-			     <td align="right">
-			      <select class="input" id="map"><option DISABLED SELECTED>--</option>';$main->LoadMap();echo '</select>
+			      <select id="player"></select>
 			     </td>
 			    </tr>
 			    <tr id="var1" style="display:none;">
-			     <td class="block2">Зона: </td>
+			     <td class="block2">Тип: </td>
 			     <td align="right">
-			      <select class="input" id="zone"></select>
+			      <select class="input" onchange="next(1)" id="type"><option DISABLED SELECTED>--</option>';$main->LoadSection();echo '</select>
 			     </td>
 			    </tr>
 			    <tr id="var2" style="display:none;">
-			     <td class="block2">Тип: </td>
+			     <td class="block2">Местность: </td>
 			     <td align="right">
-			      <select class="input" id="type"><option DISABLED SELECTED>--</option>';$main->LoadSection();echo '</select>
+			      <select class="input" onchange="ChangeZones(this.options[this.selectedIndex].value);next(2)" id="map"><option DISABLED SELECTED>--</option>';$main->LoadMap();echo '</select>
 			     </td>
 			    </tr>
 			    <tr id="var3" style="display:none;">
+			     <td class="block2">Зона: </td>
+			     <td align="right">
+			      <select class="input" onchange="next(3)" id="zone"></select>
+			     </td>
+			    </tr>
+			    <tr id="var4" style="display:none;">
 			     <td class="block2">Название: </td>
 			     <td align="right">
 			      <input id="name" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text">
 			     </td>
 			    </tr>
-			    <tr id="var4" style="display:none;">
+			    <tr id="var5" style="display:none;">
 			     <td class="block2">Wowhead ссылка: </td>
 			     <td align="right">
 			      <input id="db" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text">
 			     </td>
 			    </tr> 
 			   </table>
-			   <div align="right"><div id="var5" class="butt" style="display:none;" onClick="tolink()"><span id="retype">Закрыть</span></div></div>';
+			   <div align="right"><div id="var6" class="butt" style="display:none;" onClick="tolink()"><span id="retype">Добавить</span></div></div>';
 			   $main->LoadView($opt);echo '
-			   <div align="right"><span id="ajaximg" style="visibility:hidden;"><img src="img/1.gif"></span></div>
 			  </td>
 			 </tr>
 			</table>';
