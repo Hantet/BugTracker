@@ -484,14 +484,17 @@ class body implements html
 
 		$cfg->get("defaultdate");
 		
+		$created = true;
 		$fp = @fopen("lib/lastupdate", 'r');
+		if(!$fp)
+			$created = false;
 		$str = @fgets($fp, 1024);
 		@fclose($fp);
 		
 		if($str == date("d"))
 			return;
 
-		if(date("d") % $cfg->get("checkdiff") != 0)
+		if(date("d") % $cfg->get("checkdiff") != 0 || !$created)
 		{
 			$current = $cfg->get("version");
 			$fp = fopen("http://github.com/Hantet/BugTracker/", "r");
