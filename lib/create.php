@@ -38,13 +38,20 @@ class main implements create
 		return $sql->res($cfg->get("realmd"),"SELECT `username` FROM `account` WHERE `id` = '".$id."' LIMIT 1");
 	}
 	
-	public function GetNewSections($all=false)
+	public function GetSections($st=false)
 	{
 		$cfg = new config;
 		$sql = new sql;
 		$order = "";
-		if(!isset($all))
-			$order = " WHERE `status` = '0'";
+		
+		if(!$st)
+			return;
+		
+		switch($st)
+		{
+			case "all": break;
+			case "new": $order = " WHERE `status` = '0'";break;
+		}
 		$res = $sql->num_rows($sql->exe($cfg->get("realmd"),"SELECT 1 FROM `bt_message`".$order));
 		return ($res > "0") ? '<font color="red">'.$res.'</font>' : $res;
 	}
@@ -176,8 +183,13 @@ class main implements create
 	{
 		$cfg = new config;
 		$sql = new sql;
+		$body = new body;
 		$result = $sql->exe($cfg->get("realmd"),"SELECT * FROM `account` WHERE `username` = '".$login."' AND `sha_pass_hash` = SHA1(UPPER('".$login.":".$pass."'))");
 		$user = $sql->fetch($result);
+
+		if($user['gmlevel'] >= $cfg->get("mingm"))
+			$user['site_notice'] = $body->CheckVersion();
+
 		if($user['id'] > "0")
 			return $user;
 	}
@@ -242,7 +254,7 @@ class main implements create
 		echo '<div id="link">';
 		while($row=$sql->fetch($opt))
 		{
-			echo '<div id="unic'.$u.'"><a href="javascript:viewdiv('.$u.')"><span style="position:relative;top:2px;"><img src="img/lens.png"></a></span> ['.$this->GetNameByGUID(intval($row['guid'])).'] <a target="_blank" href="'.$row['link'].'">'.$row['name'].'</a><br></div>';
+			echo '<div id="unic'.$u.'"><a href="javascript:viewdiv('.$u.')"><span style="position:relative;top:2px;" title="Просмотр"><img src="img/lens.png"></a></span> ['.$this->GetNameByGUID(intval($row['guid'])).'] <a target="_blank" href="'.$row['link'].'">'.$row['name'].'</a><br></div>';
 			echo '<div id="save'.$u.'" style="display:none;">'.$row['guid'].'^'.$row['map'].'^'.$row['zone'].'^'.$row['type'].'^'.$row['name'].'^'.$row['link'].'</div>';
 			$u++;
 		}

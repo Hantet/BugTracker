@@ -1,7 +1,7 @@
 <?php
 $body = new body;
 $body->redirect();
-$body->header($title);
+$body->htmlstart($title);
 
 if(isset($_POST['login']) && isset($_POST['passw']))
 {

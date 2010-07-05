@@ -14,7 +14,7 @@ interface create
 	public function GetNewId();
 	public function GetNameByGUID($guid);
 	public function GetAccountNameById($id);
-	public function GetNewSections();
+	public function GetSections();
 	public function GetPercent($id,$one=false);
 	public function GetPriority($id,$one=false);
 	public function GetStatus($id,$one=false);
@@ -44,13 +44,15 @@ interface html
 	function detail($int);
 	function view();
 	function edit($id,$text);
-	function header($title);
+	function htmlstart($title);
+	function header();
 	function end();
 	function block($text);
 	function login();
 	function success();
 	function inc($content);
 	function admin();
+	function CheckVersion();
 	function adminpanel();
 	function authorization($login,$pass);
 	function failedlogin();

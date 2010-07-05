@@ -401,7 +401,7 @@ class body implements html
 			}
 		}
 	}
-	public function header($title)
+	public function htmlstart($title)
 	{
 		echo '
 		<html>
@@ -412,8 +412,11 @@ class body implements html
 		<script src="lib/main.js"></script>
 		<link rel="stylesheet" type="text/css" href="lib/style.css">
 		</head>
-		<body>
-		<div align="center"><div id="b1">';
+		<body>';
+	}
+	public function header()
+	{
+		echo '<div align="center"><div class="b1">';
 	}
 	public function end()
 	{
@@ -428,6 +431,7 @@ class body implements html
 		 </tr>
 		</table>';
 	}
+	
 	public function login()
 	{
 		echo '
@@ -445,6 +449,8 @@ class body implements html
 	{
 		$cfg = new config;
 		global $user;
+		if(isset($user['site_notice']))
+			$this->block($user['site_notice']);
 		echo '
 		<div class="border" id="userpanel"><div id="hellotxt">Здравствуйте, <b>'.$user['username'].'</b>! (<a href="#" onClick="checklogout()">выход</a>)</div></div>
 		<div class="border" id="checklogout" style="display:none;"><div id="hellotxt">Точно выйти? <button onClick="window.location.href=\'index.php?logout=1\';">Да</button> | <button onClick="logoutcancel()">Отмена</button></div></div>
@@ -464,12 +470,73 @@ class body implements html
 			$id = "0";
 		$main = new main;
 		echo '<div class="border"><div id="hellotxt">';
-		echo 'Новых: <a href="index.php?a=list&type=1">'.$main->GetNewSections().'</a> | <a href="#">Панель управления</a>';
+		echo 'Новых: <a href="index.php?a=list&type=1&sort=1&sortto=desc&last=1">'.$main->GetSections("new").'</a> | <a href="#">Панель управления</a>';
 		
-		if($_GET['a'] == "list" && $main->GetNewSections() > "0")
+		if(isset($_GET['a']) && $_GET['a'] == "list" && $main->GetSections("all") > "0")
 			echo ' | <a href="#" onClick="if(detail_view)window.location.href=\'index.php?a=admin&edit='.$id.'\';else{if(tr_select){tr_select=false;this.innerHTML=\'Изменить\';}else {tr_select=true;this.innerHTML=\'Отменить изменение\';}}">Изменить</a>';
 		
 		echo '</div></div>';
+	}
+	public function CheckVersion()
+	{
+		$cfg = new config;
+		if(!$cfg->get("CheckVersion"))
+			return;
+
+		$cfg->get("defaultdate");
+		
+		$fp = @fopen("lib/lastupdate", 'r');
+		$str = @fgets($fp, 1024);
+		@fclose($fp);
+		
+		if($str == date("d"))
+			return;
+
+		if(date("d") % $cfg->get("checkdiff") != 0)
+		{
+			$current = $cfg->get("version");
+			$fp = fopen("http://github.com/Hantet/BugTracker/", "r");
+			if($fp)
+			{
+				$str = '';
+				while(!feof($fp))
+				{
+					$str.= fgets($fp, 999);
+				}	
+				$exp1 = explode("<pre><a href",$str);
+				$exp2 = explode("[",$exp1[1]);
+				$exp3 = explode("\"",$exp1[1]);
+				$link = explode("\"",$exp3[1]);
+				$version = explode("]",$exp2[1]);
+				if($current != $version[0])
+				{
+					$text = '
+					<font color="red">Внимание! Версия Баг-трекера устарела!</font> <a href="#" onClick="showhide0()">Подробнее...</a>
+					<div id="hide0" style="display:none;">
+					<br>
+					Текущая версия: '.$current.'.<br>
+					Обновлённая версия: '.$version[0].' (<a href="http://github.com'.$link[0].'" target="_blank">подробнее</a>).<br><br>
+					Для того, чтобы обновить баг-трекер, необходимо:
+					<ul>
+					<li>В программе GIT ввести команду <b>git pull</b>.</li>
+					<li>Или скачать готовый архив с новой версией <a href="http://github.com/Hantet/BugTracker/">отсюда</a>.</li>
+					</ul>
+					Для того, чтобы отключить это уведомление, необходимо:
+					<ul>
+					 <li>Открыть конфигурационный файл баг-трекера config.php.</li>
+					 <li>Изменить параметр <b>CheckVersion</b> на false.</li>
+					</ul></div>';
+					return $text;
+				}
+				else
+				{
+					fclose($fp);
+					$fp = fopen("lib/lastupdate", 'w');
+					fwrite($fp,date("d"));
+				}
+			}
+			fclose($fp);
+		}
 	}
 	public function adminpanel()
 	{

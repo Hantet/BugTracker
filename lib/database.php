@@ -3,17 +3,17 @@ class sql implements database
 {
 	public function exe($db,$query)
 	{
-		if(mysql_select_db($db))
-			if($result = mysql_query($query))
+		if(@mysql_select_db($db))
+			if($result = @mysql_query($query))
 				return $result;
 		return false;
 	}
 	public function res($db,$query)
 	{
-		$db = mysql_select_db($db);
+		$db = @mysql_select_db($db);
 		if($db)
 		{
-			$query = mysql_query($query);
+			$query = @mysql_query($query);
 			if($query)
 			{
 				$result = @mysql_result($query,0);

@@ -31,7 +31,7 @@ border: 0;
 button {
 border: 0;
 }
-#b1 {
+.b1 {
 background-color: #666;
 border: 1px;
 border-style: solid;

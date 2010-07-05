@@ -7,8 +7,10 @@ require_once("special.php");
 $body = new body;
 $cfg = new config;
 
-if($_COOKIE['wul'] != "" && $_COOKIE['wup'] != "")
+if(isset($_COOKIE['wul']) && isset($_COOKIE['wup']) && $_COOKIE['wul'] != '' && $_COOKIE['wup'] != '')
 	$user = $body->cookies();
+	
+$body->header();
 
 if(isset($_POST['login']) && isset($_POST['passw']) && !$user)
 	$body->failedlogin();
