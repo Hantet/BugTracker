@@ -16,4 +16,7 @@ if(isset($_POST['login']) && isset($_POST['passw']))
 	else
 		$body->failedlogin();
 }
+
+$user['id'] = "-1";
+$user['gmlevel'] = "0";
 ?>

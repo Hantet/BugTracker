@@ -4,14 +4,13 @@ require_once("lib/classes.php");
 require_once("pages.php");
 require_once("special.php");
 
-$user['id'] = "-1";
 $body = new body;
 $cfg = new config;
 
 if($_COOKIE['wul'] != "" && $_COOKIE['wup'] != "")
 	$user = $body->cookies();
 
-if($_POST['login'] && $_POST['passw'] && !$user)
+if(isset($_POST['login']) && isset($_POST['passw']) && !$user)
 	$body->failedlogin();
 
 if($user['id'] != "-1")

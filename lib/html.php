@@ -230,7 +230,16 @@ class body implements html
 		$main = new main;
 		if(empty($_GET['detail']))
 		{
-			$type = intval($_GET['type']);
+			if(isset($_GET['type']))
+				$type = intval($_GET['type']);
+			else
+				$type = 0;
+				
+			if(isset($_GET['sort']))
+				$sort = intval($_GET['sort']);
+			else
+				$sort = 1;
+
 			if($type > 0 && $type < 3)
 				$href = "index.php?a=list&type=".$type;
 			else
@@ -238,7 +247,7 @@ class body implements html
 
 			$sortto = 'desc';
 			if(isset($_GET['sortto']) && ($_GET['sortto'] == "desc" || $_GET['sortto'] == "asc"))
-				if(isset($_GET['last']) && $_GET['last'] == intval($_GET['sort']))
+				if(isset($_GET['last']) && $_GET['last'] == $sort)
 					$_GET['sortto'] == "desc" ? $sortto = 'asc' : $sortto = 'desc';
 			
 			$mass = array(
@@ -252,7 +261,7 @@ class body implements html
 			<table border="1" id="t1" cellpadding="0" cellspacing="0" align="center">
 			 <tr>';
 			for($i=1;$i<count($mass)+1;$i++)
-				echo '<td class="view" style="width:'.$mass[$i][0].';" onClick="window.location.href=\''.$href.'&sort='.$i.'&sortto='.$sortto.'&last='.intval($_GET['sort']).'\';" onMouseover="this.style.cursor=\'pointer\';this.style.backgroundColor=\'#777\';" onMouseout="this.style.cursor=\'default\';this.style.backgroundColor=\'#666\';"><b>'.$mass[$i][1].'</b></td>';
+				echo '<td class="view" style="width:'.$mass[$i][0].';" onClick="window.location.href=\''.$href.'&sort='.$i.'&sortto='.$sortto.'&last='.$sort.'\';" onMouseover="this.style.cursor=\'pointer\';this.style.backgroundColor=\'#777\';" onMouseout="this.style.cursor=\'default\';this.style.backgroundColor=\'#666\';"><b>'.$mass[$i][1].'</b></td>';
 			echo '
 			  <td class="view"><b>Заголовок</b></td>
 			 </tr>';
@@ -261,9 +270,9 @@ class body implements html
 			if(isset($_GET['sort']) && intval($_GET['sort']) > 0 && $_GET['sort'] > "0" && $_GET['sort'] < "6")
 			{
 				if($_GET['sortto'] == "desc")
-					$psort = 'desc_'.$_GET['sort'];
+					$psort = 'desc_'.$sort;
 				else if($_GET['sortto'] == "asc")
-					$psort = 'asc_'.$_GET['sort'];		
+					$psort = 'asc_'.$sort;		
 			}
 			if($type == 1)
 				$result = $main->LoadList("new",$psort);
@@ -438,7 +447,7 @@ class body implements html
 		global $user;
 		echo '
 		<div class="border" id="userpanel"><div id="hellotxt">Здравствуйте, <b>'.$user['username'].'</b>! (<a href="#" onClick="checklogout()">выход</a>)</div></div>
-		<div class="border" id="checklogout" style="display:none;"><div id="hellotxt">Точно выйти? <button onClick="window.location.href=\'index.php?logout=1\';">Да</button> <button onClick="logoutcancel()">Отмена</button></div></div>
+		<div class="border" id="checklogout" style="display:none;"><div id="hellotxt">Точно выйти? <button onClick="window.location.href=\'index.php?logout=1\';">Да</button> | <button onClick="logoutcancel()">Отмена</button></div></div>
 		<div class="border"><div id="hellotxt"><a href="index.php?a=create">Создать</a> | <a href="index.php?a=list&sort=1&sortto=desc&last=1">Все</a> | <a href="index.php?a=list&type=1&sort=1&sortto=desc&last=1">Новые</a> | <a href="index.php?a=list&type=2&sort=1&sortto=desc&last=1">Мои</a> | <a href="'.$cfg->get("main").'">Сайт сервера</a></div></div>';
 	}
 	public function inc($content)
@@ -449,7 +458,10 @@ class body implements html
 	}
 	public function admin()
 	{
-		$id = $_GET['detail'];
+		if(isset($_GET['detail']))
+			$id = $_GET['detail'];
+		else
+			$id = "0";
 		$main = new main;
 		echo '<div class="border"><div id="hellotxt">';
 		echo 'Новых: <a href="index.php?a=list&type=1">'.$main->GetNewSections().'</a> | <a href="#">Панель управления</a>';
@@ -496,14 +508,14 @@ class body implements html
 	{
 		if(!empty($_GET['cookies']) || !empty($_GET['logout']))
 		{
-			if($_GET['cookies'] == "2")
+			if(isset($_GET['cookies']) && $_GET['cookies'] == "2")
 			{
 				setcookie('wul');
 				setcookie('wup');
 				@header("Location: index.php");
 				exit();
 			}
-			else if($_GET['logout'] == "1")
+			else if(isset($_GET['logout']) && $_GET['logout'] == "1")
 			{
 				setcookie('wul');
 				setcookie('wup');

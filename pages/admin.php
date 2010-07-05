@@ -1,7 +1,8 @@
 <?php
 global $user;
 $body = new body;
-if($user['gmlevel'] >= $mingm)
+$cfg = new config;
+if($user['gmlevel'] >= $cfg->get("mingm"))
 {
 	$body->adminpanel();
 }

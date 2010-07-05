@@ -38,11 +38,14 @@ class main implements create
 		return $sql->res($cfg->get("realmd"),"SELECT `username` FROM `account` WHERE `id` = '".$id."' LIMIT 1");
 	}
 	
-	public function GetNewSections()
+	public function GetNewSections($all=false)
 	{
 		$cfg = new config;
 		$sql = new sql;
-		$res = $sql->num_rows($sql->exe($cfg->get("realmd"),"SELECT 1 FROM `bt_message` WHERE `status` = '0'"));
+		$order = "";
+		if(!isset($all))
+			$order = " WHERE `status` = '0'";
+		$res = $sql->num_rows($sql->exe($cfg->get("realmd"),"SELECT 1 FROM `bt_message`".$order));
 		return ($res > "0") ? '<font color="red">'.$res.'</font>' : $res;
 	}
 	
@@ -86,7 +89,7 @@ class main implements create
 		$query = $sql->exe($cfg->get("realmd"),"SELECT * FROM `bt_zone_id` ORDER BY `map` ASC");
 		while($row = mysql_fetch_array($query))
 		{
-			if(!$opt[$row['map']])
+			if(!isset($opt[$row['map']]))
 			{
 				$opt[$row['map']] = "";
 				$opt[$cur] = substr($opt[$cur], 0, strlen($opt[$cur])-1);
@@ -95,16 +98,18 @@ class main implements create
 			$cur = $row['map'];
 		}
 		$query = $sql->exe($cfg->get("realmd"),"SELECT `map` FROM `bt_zone_id` ORDER BY `map` ASC");
-		echo '<script type="text/javascript">var map = new Array();';
+		$script = '<script type="text/javascript">var map = new Array();';
+		$curmap = '';
 		while($tow = mysql_fetch_array($query))
 		{
 			if($tow['map'] != $curmap)
 			{
 				$curmap = $tow['map'];
-				echo 'map['.$curmap.'] = "'.$opt[$tow['map']].'";';
+				$script.='map['.$curmap.'] = "'.$opt[$tow['map']].'";';
 			}
 		}
-		echo '</script>';
+		$script.='</script>';
+		echo $script;
 	}
 	
 	public function LoadChar($acc)
