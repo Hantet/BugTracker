@@ -218,7 +218,7 @@ class main implements create
 		$order = "ORDER BY `id` DESC";
 		if($sort != '')
 			$exp = explode("_",$sort);
-		if(intval($exp[1]) > 0 && ($exp[0] == "desc" || $exp[0] == "asc"))
+		if(isset($exp[1]) && intval($exp[1]) > 0 && ($exp[0] == "desc" || $exp[0] == "asc"))
 			switch($exp[1])
 			{
 				case 1: $exp[0] == "desc" ? $order = "ORDER BY `id` DESC" : $order = "ORDER BY `id` ASC";break;
@@ -265,6 +265,19 @@ class main implements create
 		echo $txt;
 	}
 	
+	public function LoadSubType()
+	{
+		$cfg = new config;
+		$sql = new sql;
+		$query = $sql->exe($cfg->get("realmd"),"SELECT `id`,`name` FROM `bt_SubType` ORDER BY `id` ASC");
+		$txt="";
+		while($row=mysql_fetch_array($query))
+		{
+			$txt.= '<option value="'.$row['id'].'">'.$row['name'].'</option>';
+		}
+		echo $txt;
+	}
+	
 	public function LoadView($opt)
 	{
 		$cfg = new config;
@@ -278,7 +291,7 @@ class main implements create
 			if($user['gmlevel'] >= $cfg->get("mingm"))
 				$name = '<a href="'.$cfg->get("LinkPlayer").intval($row['guid']).'">'.$name.'</a>';
 			echo '<div id="unic'.$u.'"><a href="javascript:viewdiv('.$u.')"><span style="position:relative;top:2px;" title="Просмотр"><img src="img/lens.png"></a></span> ['.$name.'] <a target="_blank" href="'.$row['link'].'">'.$row['name'].'</a><br></div>';
-			echo '<div id="save'.$u.'" style="display:none;">'.$row['method'].'^'.$row['guid'].'^'.$row['type'].'^'.$row['map'].'^'.$row['zone'].'^'.$row['name'].'^'.$row['link'].'</div>';
+			echo '<div id="save'.$u.'" style="display:none;">'.$row['method'].'^'.$row['guid'].'^'.$row['type'].'^'.$row['subtype'].'^'.$row['map'].'^'.$row['zone'].'^'.$row['name'].'^'.$row['link'].'</div>';
 			$u++;
 		}
 		echo '</div>';

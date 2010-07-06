@@ -31,7 +31,7 @@ if($_SERVER['HTTP_X_REQUESTED_WITH'] == "XMLHttpRequest" &&
 	do
 	{
 		$row = explode("^",$opt[$i]);
-		$query.= "('".$id."','".$row[0]."','".$row[1]."','".$row[3]."','".$row[4]."','".$row[2]."','".$row[5]."','".$row[6]."'),";
+		$query.= "('".$id."','".$row[0]."','".$row[1]."','".$row[4]."','".$row[5]."','".$row[2]."','".$row[3]."','".$row[6]."','".$row[7]."'),";
 		$i++;
 	}while($opt[$i]);
 
@@ -41,7 +41,7 @@ if($_SERVER['HTTP_X_REQUESTED_WITH'] == "XMLHttpRequest" &&
 		echo 'Таблица `bt_message` недоступна или повреждена! Данные не записаны!';
 		$t1 = false;
 	}
-	if(!$sql->exe($cfg->get("realmd"),"INSERT INTO `bt_options` (`id`,`method`,`guid`,`map`,`zone`,`type`,`name`,`link`) VALUES ".$query))
+	if(!$sql->exe($cfg->get("realmd"),"INSERT INTO `bt_options` (`id`,`method`,`guid`,`map`,`zone`,`type`,`subtype`,`name`,`link`) VALUES ".$query))
 	{
 		echo 'Таблица `bt_options` недоступна или повреждена! Данные не записаны!';
 		$t2 = false;

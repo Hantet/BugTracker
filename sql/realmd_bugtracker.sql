@@ -1,4 +1,4 @@
-﻿SET FOREIGN_KEY_CHECKS=0;
+SET FOREIGN_KEY_CHECKS=0;
 
 DROP TABLE IF EXISTS `bt_map_id`;
 CREATE TABLE `bt_map_id` (
@@ -39,6 +39,7 @@ CREATE TABLE `bt_options` (
   `guid` int(11) NOT NULL,
   `map` int(11) NOT NULL,
   `zone` int(11) NOT NULL,
+  `subtype` int(11) NOT NULL,
   `type` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `link` varchar(50) NOT NULL
@@ -72,6 +73,22 @@ INSERT INTO `bt_section` VALUES ('4', 'НИП');
 INSERT INTO `bt_section` VALUES ('5', 'Объект');
 INSERT INTO `bt_section` VALUES ('6', 'Достижение');
 INSERT INTO `bt_section` VALUES ('7', 'Звание');
+
+CREATE TABLE `bt_subtype` (
+`id`  int(11) NOT NULL ,
+`name`  varchar(15) NOT NULL ,
+PRIMARY KEY (`id`));
+
+INSERT INTO `bt_subtype` VALUES ('1','Воин');
+INSERT INTO `bt_subtype` VALUES ('2','Друид');
+INSERT INTO `bt_subtype` VALUES ('3','Жрец');
+INSERT INTO `bt_subtype` VALUES ('4','Маг');
+INSERT INTO `bt_subtype` VALUES ('5','Охотник');
+INSERT INTO `bt_subtype` VALUES ('6','Паладин');
+INSERT INTO `bt_subtype` VALUES ('7','Разбойник');
+INSERT INTO `bt_subtype` VALUES ('8','Рыцарь смерти');
+INSERT INTO `bt_subtype` VALUES ('9','Чернокнижник');
+INSERT INTO `bt_subtype` VALUES ('10','Шаман');
 
 DROP TABLE IF EXISTS `bt_status`;
 CREATE TABLE `bt_status` (

@@ -40,6 +40,12 @@ class body implements html
 			      <select class="input" onchange="next(1)" id="type"><option DISABLED SELECTED>--</option>';$main->LoadSection();echo '</select>
 			     </td>
 			    </tr>
+			    <tr id="var11" style="display:none;">
+			     <td class="block2">Подтип: </td>
+			     <td align="right">
+			      <select class="input" onchange="next(11)" id="subtype"><option DISABLED SELECTED>--</option>';$main->LoadSubType();echo '<option DISABLED>--</option><option value="-1">Другое</option></select>
+			     </td>
+			    </tr>
 			    <tr id="var2" style="display:none;">
 			     <td class="block2">Местность: </td>
 			     <td align="right">
@@ -193,6 +199,12 @@ class body implements html
 		      <select class="input" onchange="next(1)" id="type"><option DISABLED SELECTED>--</option>';$main->LoadSection();echo '</select>
 		     </td>
 		    </tr>
+			<tr id="var11" style="display:none;">
+			 <td class="block2">Подтип: </td>
+			 <td align="right">
+			  <select class="input" onchange="next(11)" id="subtype"><option DISABLED SELECTED>--</option>';$main->LoadSubType();echo '<option DISABLED>--</option><option value="-1">Другое</option></select>
+			 </td>
+			</tr>
 		    <tr id="var2" style="display:none;">
 		     <td class="block2">Местность: </td>
 		     <td align="right">
@@ -240,13 +252,6 @@ class body implements html
 		$main = new main;
 		if(empty($_GET['detail']))
 		{
-			if($user['gmlevel'] >= $cfg->get("mingm") && 
-			isset($_GET['faststatus']) && 
-			isset($_GET['changeid']) && 
-			intval($_GET['faststatus']) > 0 && 
-			intval($_GET['changeid']) > 0)
-				$main->SetStatus($_GET['faststatus'],$_GET['changeid']);
-			
 			if(isset($_GET['type']))
 				$type = intval($_GET['type']);
 			else
@@ -485,11 +490,17 @@ class body implements html
 	}
 	public function admin()
 	{
+		$main = new main;
+
+		if(isset($_GET['faststatus']) && 
+		isset($_GET['changeid']) && 
+		intval($_GET['changeid']) > 0)
+			$main->SetStatus($_GET['faststatus'],$_GET['changeid']);
+
 		if(isset($_GET['detail']))
 			$id = $_GET['detail'];
 		else
 			$id = "0";
-		$main = new main;
 		echo '<div class="border"><div id="hellotxt">';
 		echo 'Новых: <a href="index.php?a=list&type=1&sort=1&sortto=desc&last=1">'.$main->GetSections("new").'</a> | <a href="#">Панель управления</a>';
 		

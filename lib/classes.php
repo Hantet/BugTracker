@@ -30,7 +30,8 @@ interface create
 	public function LoadList($status="all");
 	public function LoadPriority($id = "0");
 	public function LoadView($id);
-
+	public function LoadSubType();
+	
 	public function login($login,$pass);
 	public function cookies($login,$pass);
 	public function AccountRepass($acc,$code);

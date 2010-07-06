@@ -51,7 +51,7 @@ if($_SERVER['HTTP_X_REQUESTED_WITH'] == "XMLHttpRequest" &&
 		$entry = $row[1];
 		$text.= '
 		<tr>
-		 <td><div style="cursor:pointer;" onClick=\'document.getElementById("name").value="'.$name.'";searchresult('.$entry.');\'><img src="img/add.png"></div></td>
+		 <td><div style="cursor:pointer;" onClick=\'document.getElementById("name").value="'.$name.'";searchresult('.$entry.');\' title="Добавить"><img src="img/add.png"></div></td>
 		 <td><div class="search"><a href="http://ru.wowhead.com/'.$table.'='.$entry.'" target="_blank">'.$pname.'</a></div></td>
 		</tr>';
 		$i++;
