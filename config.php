@@ -43,8 +43,9 @@ class config
 		##		checkdiff:		Different in days for recheck updates.
 		##################################################################################################*/
 		"CheckVersion"	=> false,
-		"version"		=> 15,
+		"version"		=> 16,
 		"checkdiff"		=> 2
+		);
 		
 		if(in_array($id,array_keys($arr)))
 			return $arr[$id];

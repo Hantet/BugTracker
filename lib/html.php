@@ -578,7 +578,7 @@ class body implements html
 	}
 	public function failedlogin()
 	{
-		echo '<div class="border"><div id="hellotxt"><font color="red">Ошибка! Такой комбинации логин/пароль не существует!</font></div></div>';
+		echo '<div class="border"><div id="hellotxt">Ошибка! Такой комбинации логин/пароль не существует!</div></div>';
 	}
 	public function cookies()
 	{

@@ -12,7 +12,7 @@ if(isset($_COOKIE['wul']) && isset($_COOKIE['wup']) && $_COOKIE['wul'] != '' && 
 	
 $body->header();
 
-if(isset($_POST['login']) && isset($_POST['passw']) && !$user)
+if(isset($_POST['login']) && isset($_POST['passw']) && $user['id'] == "-1")
 	$body->failedlogin();
 
 if($user['id'] != "-1")

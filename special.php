@@ -13,8 +13,6 @@ if(isset($_POST['login']) && isset($_POST['passw']))
 		echo '<META HTTP-EQUIV="REFRESH" CONTENT="0; URL=index.php?cookies=1&l='.$log.'&p='.$pas.'&hash='.$hash.'">';
 		exit();
 	}
-	else
-		$body->failedlogin();
 }
 
 $user['id'] = "-1";
