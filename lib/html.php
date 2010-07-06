@@ -55,8 +55,7 @@ class body implements html
 			    <tr id="var4" style="display:none;">
 			     <td class="block2" valign="top">Название: </td>
 			     <td align="right">
-			      <input id="name" onKeyUp="if(this.value.length > 2)searchfor(this.value)" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text">
-			      <div id="searchblock"></div>
+			      <input id="name" onKeyUp="searchfor(this.value)" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text">
 			     </td>
 			    </tr>
 			    <tr id="var5" style="display:none;">

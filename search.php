@@ -42,7 +42,7 @@ if($_SERVER['HTTP_X_REQUESTED_WITH'] == "XMLHttpRequest" &&
 			break;
 	}
 	$result = $sql->exe($cfg->get("mangos"),$query." LIMIT ".$cfg->get("searchlimit"));
-	$text = '<br><table border="0" align="center" cellpadding="0" cellspacing="0" style="text-align: left;border: 1px;border-color: black;border-style:solid;padding: 3px;">';
+	$text = '<br><table border="0" align="center" width="95%" cellpadding="0" cellspacing="0" style="text-align: left;border: 1px;border-color: black;border-style:solid;padding: 3px;">';
 	$i=0;
 	while($row=$sql->fetch($result))
 	{
@@ -55,6 +55,6 @@ if($_SERVER['HTTP_X_REQUESTED_WITH'] == "XMLHttpRequest" &&
 		</tr>';
 		$i++;
 	}
-	echo $i.'^<a href="#" onClick="searchview()">Найдено: '.$i.'</a>^'.$text.'</table><br>';
+	echo $i.'^'.$text.'</table><br>';
 }
 ?>

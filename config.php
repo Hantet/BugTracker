@@ -49,7 +49,7 @@ class config
 		##		checkdiff:		Different in days for recheck updates.
 		##################################################################################################*/
 		"CheckVersion"	=> false,
-		"version"		=> 19,
+		"version"		=> 20,
 		"checkdiff"		=> 2
 		);
 		
