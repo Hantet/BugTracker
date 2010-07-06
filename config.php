@@ -44,7 +44,7 @@ class config
 		##		defaultdate:	Current php time-zone of server.
 		##################################################################################################*/
 		"CheckVersion"	=> false,
-		"version"		=> 13,
+		"version"		=> 14,
 		"checkdiff"		=> 2,
 		"defaultdate"	=> date_default_timezone_set('Europe/Moscow'));
 		
