@@ -9,12 +9,14 @@ class config
 		##		dbhost:			IP-address or domain name where is started server MySQL.
 		##		dbuser:			Username for connect to server MySQL.
 		##		dbpass:			Password for connect to server MySQL.
+		##		mangos:			Name database of world.
 		##		realmd:			Name database of account.
 		##		characters:		Name database of characters.
 		##################################################################################################*/
 		"dbhost"		=> "localhost",
 		"dbuser"		=> "mangos",
 		"dbpass"		=> "mangos",
+		"mangos"		=> "mangos"
 		"realmd"		=> "realmd",
 		"characters"	=> "characters",
 		/*##################################################################################################
@@ -27,6 +29,7 @@ class config
 		##		anim:			Animation progress-bar in list-page (boolean).
 		##		LinkAccount:	Link to page on deatil view account or false if it is not necessary.
 		##		LinkPlayer:		Link to page on deatil view character or false if it is not necessary.
+		##		searchlimit:	Limit of query for search (query, creature, item, etc).
 		##################################################################################################*/
 		"title"			=> "Баг-трекер",
 		"mingm"			=> 3,
@@ -36,6 +39,7 @@ class config
 		"anim"			=> false,
 		"LinkAccount"	=> "http://localhost/admin/account.php?id=",
 		"LinkPlayer"	=> "http://localhost/admin/player.php?guid=",
+		"searchlimit"	=> 10,
 		/*##################################################################################################
 		## Announce of updates
 		##		CheckVersion:	Check new version in git page of project (boolean).
@@ -43,7 +47,7 @@ class config
 		##		checkdiff:		Different in days for recheck updates.
 		##################################################################################################*/
 		"CheckVersion"	=> false,
-		"version"		=> 16,
+		"version"		=> 17,
 		"checkdiff"		=> 2
 		);
 		
