@@ -18,27 +18,27 @@ if($_SERVER['HTTP_X_REQUESTED_WITH'] == "XMLHttpRequest" &&
 	{
 		case "quest":
 			if($cfg->get("lang") == 8)
-				$query = "SELECT `Title_loc8`,`entry` FROM `locales_quest` WHERE `Title_loc8` LIKE '".$string."%'";
+				$query = "SELECT `Title_loc8`,`entry` FROM `locales_quest` WHERE `Title_loc8` LIKE '%".$string."%'";
 			else if($cfg->get("lang") == 1)
-				$query = "SELECT `Title`,`entry` FROM `quest_template` WHERE `Title` LIKE '".$string."%'";
+				$query = "SELECT `Title`,`entry` FROM `quest_template` WHERE `Title` LIKE '%".$string."%'";
 			break;
 		case "item":
 			if($cfg->get("lang") == 8)
-				$query = "SELECT `name_loc8`,`entry` FROM `locales_item` WHERE `name_loc8` LIKE '".$string."%'";
+				$query = "SELECT `name_loc8`,`entry` FROM `locales_item` WHERE `name_loc8` LIKE '%".$string."%'";
 			else if($cfg->get("lang") == 1)
-				$query = "SELECT `name`,`entry` FROM `item_template` WHERE `name` LIKE '".$string."%'";
+				$query = "SELECT `name`,`entry` FROM `item_template` WHERE `name` LIKE '%".$string."%'";
 			break;
 		case "npc":
 			if($cfg->get("lang") == 8)
-				$query = "SELECT `name_loc8`,`entry` FROM `locales_creature` WHERE `name_loc8` LIKE '".$string."%'";
+				$query = "SELECT `name_loc8`,`entry` FROM `locales_creature` WHERE `name_loc8` LIKE '%".$string."%'";
 			else if($cfg->get("lang") == 1)
-				$query = "SELECT `name`,`entry` FROM `creature_template` WHERE `name` LIKE '".$string."%'";
+				$query = "SELECT `name`,`entry` FROM `creature_template` WHERE `name` LIKE '%".$string."%'";
 			break;
 		case "object":
 			if($cfg->get("lang") == 8)
-				$query = "SELECT `name_loc8`,`entry` FROM `locales_gameobject` WHERE `name_loc8` LIKE '".$string."%'";
+				$query = "SELECT `name_loc8`,`entry` FROM `locales_gameobject` WHERE `name_loc8` LIKE '%".$string."%'";
 			else if($cfg->get("lang") == 1)
-				$query = "SELECT `name`,`entry` FROM `gameobject_template` WHERE `name` LIKE '".$string."%'";
+				$query = "SELECT `name`,`entry` FROM `gameobject_template` WHERE `name` LIKE '%".$string."%'";
 			break;
 	}
 	$result = $sql->exe($cfg->get("mangos"),$query." LIMIT ".$cfg->get("searchlimit"));
@@ -47,11 +47,12 @@ if($_SERVER['HTTP_X_REQUESTED_WITH'] == "XMLHttpRequest" &&
 	while($row=$sql->fetch($result))
 	{
 		$name = str_replace("'","",$row[0]);
+		$pname = preg_replace('/('.$string.')/iu', '<font color="gold">\0</font>', $name);
 		$entry = $row[1];
 		$text.= '
 		<tr>
 		 <td><div style="cursor:pointer;" onClick=\'document.getElementById("name").value="'.$name.'";searchresult('.$entry.');\'><img src="img/add.png"></div></td>
-		 <td><div class="search"><a href="http://ru.wowhead.com/'.$table.'='.$entry.'" target="_blank">'.$name.'</a></div></td>
+		 <td><div class="search"><a href="http://ru.wowhead.com/'.$table.'='.$entry.'" target="_blank">'.$pname.'</a></div></td>
 		</tr>';
 		$i++;
 	}
