@@ -31,7 +31,7 @@ if($_SERVER['HTTP_X_REQUESTED_WITH'] == "XMLHttpRequest" &&
 	do
 	{
 		$row = explode("^",$opt[$i]);
-		$query.= "('".$id."','".$row[0]."','".$row[1]."','".$row[2]."','".$row[3]."','".$row[4]."','".$row[5]."','".$row[6]."'),";
+		$query.= "('".$id."','".$row[0]."','".$row[1]."','".$row[3]."','".$row[4]."','".$row[2]."','".$row[5]."','".$row[6]."'),";
 		$i++;
 	}while($opt[$i]);
 
