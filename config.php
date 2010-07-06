@@ -41,12 +41,10 @@ class config
 		##		CheckVersion:	Check new version in git page of project (boolean).
 		##		version:		Current version of bug-tracker. Do not change!
 		##		checkdiff:		Different in days for recheck updates.
-		##		defaultdate:	Current php time-zone of server.
 		##################################################################################################*/
 		"CheckVersion"	=> false,
-		"version"		=> 14,
-		"checkdiff"		=> 2,
-		"defaultdate"	=> date_default_timezone_set('Europe/Moscow'));
+		"version"		=> 15,
+		"checkdiff"		=> 2
 		
 		if(in_array($id,array_keys($arr)))
 			return $arr[$id];

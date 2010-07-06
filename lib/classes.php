@@ -18,6 +18,7 @@ interface create
 	public function GetPercent($id,$one=false);
 	public function GetPriority($id,$one=false);
 	public function GetStatus($id,$one=false);
+	public function GetDate($format);
 	
 	public function SetStatus($statusid=-1,$id=-1);
 	

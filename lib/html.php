@@ -499,11 +499,10 @@ class body implements html
 	}
 	public function CheckVersion()
 	{
+		$main = new main;
 		$cfg = new config;
 		if(!$cfg->get("CheckVersion"))
 			return;
-
-		$cfg->get("defaultdate");
 		
 		$created = true;
 		$fp = @fopen("lib/lastupdate", 'r');
@@ -512,10 +511,10 @@ class body implements html
 		$str = @fgets($fp, 1024);
 		@fclose($fp);
 		
-		if($str == date("d"))
+		if($str == $main->GetDate("d"))
 			return;
 
-		if(date("d") % $cfg->get("checkdiff") != 0 || !$created)
+		if($main->GetDate("d") % $cfg->get("checkdiff") != 0 || !$created)
 		{
 			$current = $cfg->get("version");
 			$fp = fopen("http://github.com/Hantet/BugTracker/", "r");
@@ -555,7 +554,7 @@ class body implements html
 				{
 					fclose($fp);
 					$fp = fopen("lib/lastupdate", 'w');
-					fwrite($fp,date("d"));
+					fwrite($fp,$main->GetDate("d"));
 				}
 			}
 			fclose($fp);

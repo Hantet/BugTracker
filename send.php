@@ -26,8 +26,7 @@ if($_SERVER['HTTP_X_REQUESTED_WITH'] == "XMLHttpRequest" &&
 	$t1 = true;
 	$t2 = true;
 	$query = "";
-	$cfg->get("defaultdate");
-	$date = date("Y-m-d H:i:s");
+	$date = $main->GetDate("Y-m-d H:i:s");
 
 	do
 	{

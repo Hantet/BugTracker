@@ -76,7 +76,7 @@ class main implements create
 		$prior = $sql->fetch($sql->exe($cfg->get("realmd"),"SELECT `name`,`color` FROM `bt_priority` WHERE `id` = '".$id."' LIMIT 1"));
 		return '<font color="'.$prior['color'].'">'.$prior['name'].'</font>';
 	}
-	
+
 	public function GetStatus($all,$one=false)
 	{
 		$cfg = new config;
@@ -86,7 +86,16 @@ class main implements create
 		return $status;
 		return $sql->res($cfg->get("realmd"),"SELECT `name` FROM `bt_status` WHERE `id` = '".$status."' LIMIT 1");
 	}
-	
+
+	public function GetDate($format)
+	{
+		if(isset($format))
+		{
+			date_default_timezone_set('Europe/Moscow');
+			return date($format);
+		}
+	}
+
 	public function SetStatus($statusid=-1,$id=-1)
 	{
 		$cfg = new config;
