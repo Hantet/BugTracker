@@ -19,6 +19,8 @@ interface create
 	public function GetPriority($id,$one=false);
 	public function GetStatus($id,$one=false);
 	
+	public function SetStatus($statusid=-1,$id=-1);
+	
 	public function LoadZones();
 	public function LoadChar($acc);
 	public function LoadStatus($id="0");

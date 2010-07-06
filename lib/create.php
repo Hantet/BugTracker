@@ -87,6 +87,14 @@ class main implements create
 		return $sql->res($cfg->get("realmd"),"SELECT `name` FROM `bt_status` WHERE `id` = '".$status."' LIMIT 1");
 	}
 	
+	public function SetStatus($statusid=-1,$id=-1)
+	{
+		$cfg = new config;
+		$sql = new sql;
+		if($statusid != -1 && $id != -1)
+			return $sql->exe($cfg->get("realmd"),"UPDATE `bt_message` SET `status` = '".$statusid."' WHERE `id` = '".$id."' LIMIT 1");
+	}
+	
 	public function LoadZones()
 	{
 		$cfg = new config;
@@ -138,9 +146,11 @@ class main implements create
 		$text = "";
 		while($row=$sql->fetch($query))
 		{
-			if($id > "0")
-			if($row['id'] == $this->GetStatus($all,true))
-			$attr = "SELECTED";else $attr = "";
+			if($id > 0)
+				if($row['id'] == $this->GetStatus($all,true))
+					$attr = "SELECTED";
+				else
+					$attr = "";
 			$text.= '<option '.$attr.' value="'.$row['id'].'">'.$row['name'].'</option>';
 		}
 		return $text;

@@ -23,14 +23,16 @@ class config
 		##		mingm:			Minimum security level for access in adminpanel.
 		##		pagepath:		Folder on a site where there are executing files.
 		##		main:			IP-address or domain name of site.
+		##		progressbar:	Display progress bar in list-page (boolean).
 		##		anim:			Animation progress-bar in list-page (boolean).
 		##		LinkAccount:	Link to page on deatil view account or false if it is not necessary.
 		##		LinkPlayer:		Link to page on deatil view character or false if it is not necessary.
 		##################################################################################################*/
 		"title"			=> "Баг-трекер",
-		"mingm"			=> "3",
+		"mingm"			=> 3,
 		"pagepath"		=> "pages/",
 		"main"			=> "http://localhost",
+		"progressbar"	=> true,
 		"anim"			=> false,
 		"LinkAccount"	=> "http://localhost/admin/account.php?id=",
 		"LinkPlayer"	=> "http://localhost/admin/player.php?guid=",
@@ -42,7 +44,7 @@ class config
 		##		defaultdate:	Current php time-zone of server.
 		##################################################################################################*/
 		"CheckVersion"	=> false,
-		"version"		=> "13",
+		"version"		=> 13,
 		"checkdiff"		=> 2,
 		"defaultdate"	=> date_default_timezone_set('Europe/Moscow'));
 		

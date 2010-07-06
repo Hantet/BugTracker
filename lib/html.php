@@ -170,65 +170,82 @@ class body implements html
 		$this->block($this->viewdate($all));
 		$this->block($this->progress($all));
 		echo '<script>detail_view=true;</script>';
-			echo '
-			<table border="1" id="t1" cellpadding="0" cellspacing="0" align="center">
-			 <tr>
-			  <td width="400px" class="block"><div class="pad">Сейчас так:</div>
-			   <textarea class="textarea" id="area1" style="height:80px;" READONLY>'.$all['text_1'].'</textarea><div class="pad">А должно быть так:</div>
-			   <textarea class="textarea" id="area2" style="height:80px;" READONLY>'.$all['text_2'].'</textarea><div class="pad">Пояснение:</div>
-			   <textarea class="textarea" id="area3" READONLY>'.$all['text_2'].'</textarea>
-			  </td>
-			  <td class="block">
-			   <table class="t2" id="t2" border="0" cellpadding="0" cellspacing="0" align="center">
-			    <tr style="display:none;">
-			     <td class="block2">Персонаж: </td>
-			     <td align="right">
-			      <select id="player"></select>
-			     </td>
-			    </tr>
-			    <tr id="var1" style="display:none;">
-			     <td class="block2">Тип: </td>
-			     <td align="right">
-			      <select class="input" onchange="next(1)" id="type"><option DISABLED SELECTED>--</option>';$main->LoadSection();echo '</select>
-			     </td>
-			    </tr>
-			    <tr id="var2" style="display:none;">
-			     <td class="block2">Местность: </td>
-			     <td align="right">
-			      <select class="input" onchange="ChangeZones(this.options[this.selectedIndex].value);next(2)" id="map"><option DISABLED SELECTED>--</option>';$main->LoadMap();echo '</select>
-			     </td>
-			    </tr>
-			    <tr id="var3" style="display:none;">
-			     <td class="block2">Зона: </td>
-			     <td align="right">
-			      <select class="input" onchange="next(3)" id="zone"></select>
-			     </td>
-			    </tr>
-			    <tr id="var4" style="display:none;">
-			     <td class="block2">Название: </td>
-			     <td align="right">
-			      <input id="name" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text">
-			     </td>
-			    </tr>
-			    <tr id="var5" style="display:none;">
-			     <td class="block2">Wowhead ссылка: </td>
-			     <td align="right">
-			      <input id="db" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text">
-			     </td>
-			    </tr> 
-			   </table>
-			   <div align="right"><div id="var6" class="butt" style="display:none;" onClick="tolink()"><span id="retype">Добавить</span></div></div>';
-			   $main->LoadView($opt);echo '
-			  </td>
-			 </tr>
-			</table>';
+		echo '
+		<table border="1" id="t1" cellpadding="0" cellspacing="0" align="center">
+		 <tr>
+		  <td width="400px" class="block"><div class="pad">Сейчас так:</div>
+		   <textarea class="textarea" id="area1" style="height:80px;" READONLY>'.$all['text_1'].'</textarea><div class="pad">А должно быть так:</div>
+		   <textarea class="textarea" id="area2" style="height:80px;" READONLY>'.$all['text_2'].'</textarea><div class="pad">Пояснение:</div>
+		   <textarea class="textarea" id="area3" READONLY>'.$all['text_2'].'</textarea>
+		  </td>
+		  <td class="block">
+		   <table class="t2" id="t2" border="0" cellpadding="0" cellspacing="0" align="center">
+		    <tr style="display:none;">
+		     <td class="block2">Персонаж: </td>
+		     <td align="right">
+		      <select id="player"></select>
+		     </td>
+		    </tr>
+		    <tr id="var1" style="display:none;">
+		     <td class="block2">Тип: </td>
+		     <td align="right">
+		      <select class="input" onchange="next(1)" id="type"><option DISABLED SELECTED>--</option>';$main->LoadSection();echo '</select>
+		     </td>
+		    </tr>
+		    <tr id="var2" style="display:none;">
+		     <td class="block2">Местность: </td>
+		     <td align="right">
+		      <select class="input" onchange="ChangeZones(this.options[this.selectedIndex].value);next(2)" id="map"><option DISABLED SELECTED>--</option>';$main->LoadMap();echo '</select>
+		     </td>
+		    </tr>
+		    <tr id="var3" style="display:none;">
+		     <td class="block2">Зона: </td>
+		     <td align="right">
+		      <select class="input" onchange="next(3)" id="zone"></select>
+		     </td>
+		    </tr>
+		    <tr id="var4" style="display:none;">
+		     <td class="block2">Название: </td>
+		     <td align="right">
+		      <input id="name" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text">
+		     </td>
+		    </tr>
+		    <tr id="var5" style="display:none;">
+		     <td class="block2">Wowhead ссылка: </td>
+		     <td align="right">
+		      <input id="db" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text">
+		     </td>
+		    </tr> 
+		   </table>
+		   <div align="right"><div id="var6" class="butt" style="display:none;" onClick="tolink()"><span id="retype">Добавить</span></div></div>';
+		   $main->LoadView($opt);echo '
+		  </td>
+		 </tr>
+		</table>';
+
+		if($user['gmlevel'] >= $cfg->get("mingm"))
+		{
+			$text = '
+			<div align="right">
+			 Быстрый ответ: <select id="fastchange0" onchange="fastchangestatus('.$all['id'].')">'.$main->LoadStatus(1,$all).'</select>
+			</div>';
+			$this->block($text);
+		}
 	}
 	public function view()
 	{
+		global $user;
 		$cfg = new config;
 		$main = new main;
 		if(empty($_GET['detail']))
 		{
+			if($user['gmlevel'] >= $cfg->get("mingm") && 
+			isset($_GET['faststatus']) && 
+			isset($_GET['changeid']) && 
+			intval($_GET['faststatus']) > 0 && 
+			intval($_GET['changeid']) > 0)
+				$main->SetStatus($_GET['faststatus'],$_GET['changeid']);
+			
 			if(isset($_GET['type']))
 				$type = intval($_GET['type']);
 			else
@@ -260,7 +277,8 @@ class body implements html
 			<table border="1" id="t1" cellpadding="0" cellspacing="0" align="center">
 			 <tr>';
 			for($i=1;$i<count($mass)+1;$i++)
-				echo '<td class="view" style="width:'.$mass[$i][0].';" onClick="window.location.href=\''.$href.'&sort='.$i.'&sortto='.$sortto.'&last='.$sort.'\';" onMouseover="this.style.cursor=\'pointer\';this.style.backgroundColor=\'#777\';" onMouseout="this.style.cursor=\'default\';this.style.backgroundColor=\'#666\';"><b>'.$mass[$i][1].'</b></td>';
+				if(($i == 3 && $cfg->get("progressbar")) || $i != 3)
+					echo '<td class="view" style="width:'.$mass[$i][0].';" onClick="window.location.href=\''.$href.'&sort='.$i.'&sortto='.$sortto.'&last='.$sort.'\';" onMouseover="this.style.cursor=\'pointer\';this.style.backgroundColor=\'#777\';" onMouseout="this.style.cursor=\'default\';this.style.backgroundColor=\'#666\';"><b>'.$mass[$i][1].'</b></td>';
 			echo '
 			  <td class="view"><b>Заголовок</b></td>
 			 </tr>';
@@ -297,8 +315,11 @@ class body implements html
 				echo '
 				<tr onClick="if(tr_select)window.location.href=\'index.php?a=admin&edit='.$row['id'].'\';else window.location.href=\'index.php?a=list&detail='.$row['id'].'\';" onMouseover="this.style.cursor=\'pointer\';this.style.backgroundColor=\'#888\';" onMouseout="this.style.cursor=\'default\';this.style.backgroundColor=\'#666\';">
 				<td class="view">'.$row['id'].'</td>
-				<td class="view">'.$main->GetNameByGUID(intval($row['sender'])).'</td>
-				<td class="view" style="padding:0;margin:0;">'.$img.'</td>
+				<td class="view">'.$main->GetNameByGUID(intval($row['sender'])).'</td>';
+				if($cfg->get("progressbar"))
+					echo '
+				<td class="view" style="padding:0;margin:0;">'.$img.'</td>';
+				echo '
 				<td class="view">'.$main->GetStatus($all).'</td>
 				<td class="view">'.$main->GetPriority($all).'</td>
 				<td class="view"><div id="namelimit1" title="'.$title.'"><div style="position:absolute;">'.$title.'</div></div></td>

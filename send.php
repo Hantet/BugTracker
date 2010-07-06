@@ -14,21 +14,14 @@ if($_SERVER['HTTP_X_REQUESTED_WITH'] == "XMLHttpRequest" &&
 	$main = new main;
 	$cfg = new config;
 
-	$op = $_POST['sql'];
-	$a1 = $_POST['a1'];
-	$a2 = $_POST['a2'];
-	$a3 = $_POST['a3'];
-	$a4 = $_POST['a4'];
-	$a5 = $_POST['a5'];
-
-	$area1 = htmlspecialchars(addslashes($a1), ENT_QUOTES);
-	$area2 = htmlspecialchars(addslashes($a2), ENT_QUOTES);
-	$area3 = htmlspecialchars(addslashes($a3), ENT_QUOTES);
-	$area4 = htmlspecialchars(addslashes($a4), ENT_QUOTES);
-	$area5 = htmlspecialchars(addslashes($a5), ENT_QUOTES);
+	$area1 = htmlspecialchars($_POST['a1'], ENT_QUOTES);
+	$area2 = htmlspecialchars($_POST['a2'], ENT_QUOTES);
+	$area3 = htmlspecialchars($_POST['a3'], ENT_QUOTES);
+	$area4 = htmlspecialchars($_POST['a4'], ENT_QUOTES);
+	$area5 = htmlspecialchars($_POST['a5'], ENT_QUOTES);
 
 	$id = $main->GetNewId();
-	$opt = explode("*",$op);
+	$opt = explode("*",$_POST['sql']);
 	$i=0;
 	$t1 = true;
 	$t2 = true;
