@@ -53,9 +53,10 @@ class body implements html
 			     </td>
 			    </tr>
 			    <tr id="var4" style="display:none;">
-			     <td class="block2">Название: </td>
+			     <td class="block2" valign="top">Название: </td>
 			     <td align="right">
 			      <input id="name" onKeyUp="if(this.value.length > 2)searchfor(this.value)" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text">
+			      <div id="searchblock"></div>
 			     </td>
 			    </tr>
 			    <tr id="var5" style="display:none;">
@@ -65,6 +66,7 @@ class body implements html
 			     </td>
 			    </tr> 
 			   </table>
+			   <div id="searchview" style="display:none;"></div>
 			   <div align="right"><div id="var6" class="butt" style="display:none;" onClick="tolink()"><span id="retype">Добавить</span></div></div>
 			   <div id="link"></div>
 			   <div id="saveblock" style="display:none;"></div>
@@ -176,7 +178,7 @@ class body implements html
 		  <td width="400px" class="block"><div class="pad">Сейчас так:</div>
 		   <textarea class="textarea" id="area1" style="height:80px;" READONLY>'.$all['text_1'].'</textarea><div class="pad">А должно быть так:</div>
 		   <textarea class="textarea" id="area2" style="height:80px;" READONLY>'.$all['text_2'].'</textarea><div class="pad">Пояснение:</div>
-		   <textarea class="textarea" id="area3" READONLY>'.$all['text_2'].'</textarea>
+		   <textarea class="textarea" id="area3" READONLY>'.$all['text_3'].'</textarea>
 		  </td>
 		  <td class="block">
 		   <table class="t2" id="t2" border="0" cellpadding="0" cellspacing="0" align="center">

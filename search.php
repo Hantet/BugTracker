@@ -16,25 +16,45 @@ if($_SERVER['HTTP_X_REQUESTED_WITH'] == "XMLHttpRequest" &&
 	$query = "";
 	switch($table)
 	{
-		case "2":
-			$query = "SELECT `name`,`id` FROM `quest_template` WHERE `name` LIKE '".$string."%';
+		case "quest":
+			if($cfg->get("lang") == 8)
+				$query = "SELECT `Title_loc8`,`entry` FROM `locales_quest` WHERE `Title_loc8` LIKE '".$string."%'";
+			else if($cfg->get("lang") == 1)
+				$query = "SELECT `Title`,`entry` FROM `quest_template` WHERE `Title` LIKE '".$string."%'";
 			break;
-		case "3":
-			$query = "SELECT `name`,`id` FROM `item_template` WHERE `name` LIKE '".$string."%';
+		case "item":
+			if($cfg->get("lang") == 8)
+				$query = "SELECT `name_loc8`,`entry` FROM `locales_item` WHERE `name_loc8` LIKE '".$string."%'";
+			else if($cfg->get("lang") == 1)
+				$query = "SELECT `name`,`entry` FROM `item_template` WHERE `name` LIKE '".$string."%'";
 			break;
-		case "4":
-			$query = "SELECT `name`,`entry` FROM `creature_template` WHERE `name` LIKE '".$string."%';
+		case "npc":
+			if($cfg->get("lang") == 8)
+				$query = "SELECT `name_loc8`,`entry` FROM `locales_creature` WHERE `name_loc8` LIKE '".$string."%'";
+			else if($cfg->get("lang") == 1)
+				$query = "SELECT `name`,`entry` FROM `creature_template` WHERE `name` LIKE '".$string."%'";
 			break;
-		case "5":
-			$query = "SELECT `name`,`entry` FROM `gameobject_template` WHERE `name` LIKE '".$string."%'";
+		case "object":
+			if($cfg->get("lang") == 8)
+				$query = "SELECT `name_loc8`,`entry` FROM `locales_gameobject` WHERE `name_loc8` LIKE '".$string."%'";
+			else if($cfg->get("lang") == 1)
+				$query = "SELECT `name`,`entry` FROM `gameobject_template` WHERE `name` LIKE '".$string."%'";
 			break;
 	}
 	$result = $sql->exe($cfg->get("mangos"),$query." LIMIT ".$cfg->get("searchlimit"));
-	$text = '';
+	$text = '<br><table border="0" align="center" cellpadding="0" cellspacing="0" style="text-align: left;border: 1px;border-color: black;border-style:solid;padding: 3px;">';
+	$i=0;
 	while($row=$sql->fetch($result))
 	{
-		$text.= '<div class="search"><a href="#" onClick="searchresult('.$row[1].')">'.$row[0].'</a></div>';
+		$name = str_replace("'","",$row[0]);
+		$entry = $row[1];
+		$text.= '
+		<tr>
+		 <td><div style="cursor:pointer;" onClick=\'document.getElementById("name").value="'.$name.'";searchresult('.$entry.');\'><img src="img/add.png"></div></td>
+		 <td><div class="search"><a href="http://ru.wowhead.com/'.$table.'='.$entry.'" target="_blank">'.$name.'</a></div></td>
+		</tr>';
+		$i++;
 	}
-	echo $text;
+	echo $i.'^<a href="#" onClick="searchview()">Найдено: '.$i.'</a>^'.$text.'</table><br>';
 }
 ?>

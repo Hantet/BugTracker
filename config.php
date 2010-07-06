@@ -16,7 +16,7 @@ class config
 		"dbhost"		=> "localhost",
 		"dbuser"		=> "mangos",
 		"dbpass"		=> "mangos",
-		"mangos"		=> "mangos"
+		"mangos"		=> "mangos",
 		"realmd"		=> "realmd",
 		"characters"	=> "characters",
 		/*##################################################################################################
@@ -30,6 +30,7 @@ class config
 		##		LinkAccount:	Link to page on deatil view account or false if it is not necessary.
 		##		LinkPlayer:		Link to page on deatil view character or false if it is not necessary.
 		##		searchlimit:	Limit of query for search (query, creature, item, etc).
+		##		lang:			Translate search result to russian language? (8: russian, 1: english) 
 		##################################################################################################*/
 		"title"			=> "Баг-трекер",
 		"mingm"			=> 3,
@@ -40,6 +41,7 @@ class config
 		"LinkAccount"	=> "http://localhost/admin/account.php?id=",
 		"LinkPlayer"	=> "http://localhost/admin/player.php?guid=",
 		"searchlimit"	=> 10,
+		"lang"			=> 8,
 		/*##################################################################################################
 		## Announce of updates
 		##		CheckVersion:	Check new version in git page of project (boolean).
@@ -47,7 +49,7 @@ class config
 		##		checkdiff:		Different in days for recheck updates.
 		##################################################################################################*/
 		"CheckVersion"	=> false,
-		"version"		=> 17,
+		"version"		=> 18,
 		"checkdiff"		=> 2
 		);
 		
