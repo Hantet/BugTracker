@@ -95,7 +95,29 @@ class main implements create
 			return date($format);
 		}
 	}
-
+	
+	public function GetPreviousElement($type,$change)
+	{
+		$cfg = new config;
+		$sql = new sql;
+		switch($type)
+		{
+			case 1: $table='bt_priority';break;
+			case 2: $table='bt_section';break;
+			case 3: $table='bt_subtype';break;
+			case 4: $table='bt_status';break;
+			default: return;
+		}
+		$id = $sql->res($cfg->get("realmd"),"SELECT `id` FROM `".$table."` WHERE `id` < '".$change."' ORDER BY `id` DESC LIMIT 1");
+		if($id != -1)
+			return $id;
+		else
+			$id = $sql->res($cfg->get("realmd"),"SELECT `id` FROM `".$table."` WHERE `id` > '".$change."' ORDER BY `id` ASC LIMIT 1");
+		if($id != -1)
+			return $id;
+		return false;
+	}
+	
 	public function SetStatus($statusid=-1,$id=-1)
 	{
 		$cfg = new config;
@@ -155,11 +177,10 @@ class main implements create
 		$text = "";
 		while($row=$sql->fetch($query))
 		{
-			if($id > 0)
+			$attr = "";
+			if($id > "0")
 				if($row['id'] == $this->GetStatus($all,true))
 					$attr = "SELECTED";
-				else
-					$attr = "";
 			$text.= '<option '.$attr.' value="'.$row['id'].'">'.$row['name'].'</option>';
 		}
 		return $text;
@@ -170,10 +191,12 @@ class main implements create
 		$cfg = new config;
 		$sql = new sql;
 		$query = $sql->exe($cfg->get("realmd"),"SELECT `id`,`name` FROM `bt_section` ORDER BY `id` ASC");
+		$text = '';
 		while($row=mysql_fetch_array($query))
 		{
-			echo '<option value="'.$row['id'].'">'.$row['name'].'</option>';
+			$text.= '<option value="'.$row['id'].'">'.$row['name'].'</option>';
 		}
+		return $text;
 	}
 	
 	public function LoadMap()
@@ -239,30 +262,35 @@ class main implements create
 		return $sql->exe($cfg->get("realmd"),$query);
 	}
 	
-	public function LoadPriority($id="0",$all="0")
+	public function LoadPriority($id="0",$all="0",$color="0")
 	{
 		$cfg = new config;
 		$sql = new sql;
-		$query = $sql->exe($cfg->get("realmd"),"SELECT `id`,`name` FROM `bt_priority` ORDER BY `id` ASC");
+		$query = $sql->exe($cfg->get("realmd"),"SELECT `id`,`name`,`color` FROM `bt_priority` ORDER BY `id` ASC");
 		$txt="";
-		while($row=mysql_fetch_array($query))
+
+		if($color == "color")
+			$clr = '<div id="PriorityColor" style="display:none;">';
+
+		while($row=$sql->fetch($query))
 		{
+			if($color == "color")
+				$clr.= $row['color'].'^';
+
+			$attr = "";
 			if($id > "0")
 			{
 				if($row['id'] == $this->GetPriority($all,true))
-				{
 					$attr = "SELECTED";
-				}
-				else
-				{
-					$attr = "";
-				}
 			}
 			$txt.= '<option '.$attr.' value="'.$row['id'].'">'.$row['name'].'</option>';
 		}
-		if($id > "0")
-			return $txt;
-		echo $txt;
+		if($color == "color")
+		{
+			$clr.= '</div>';
+			echo $clr;
+		}
+		return $txt;
 	}
 	
 	public function LoadSubType()
@@ -275,7 +303,7 @@ class main implements create
 		{
 			$txt.= '<option value="'.$row['id'].'">'.$row['name'].'</option>';
 		}
-		echo $txt;
+		return $txt;
 	}
 	
 	public function LoadView($opt)

@@ -7,6 +7,8 @@ class body implements html
 		$cfg = new config;
 		$main = new main;
 		$main->LoadZones();
+		$sections = $main->LoadSection();
+		$subtype = $main->LoadSubType();
 		if($user['id'] > "-1")
 		{
 			echo '
@@ -37,13 +39,13 @@ class body implements html
 			    <tr id="var1" style="display:none;">
 			     <td class="block2">Тип: </td>
 			     <td align="right">
-			      <select class="input" onchange="next(1)" id="type"><option DISABLED SELECTED>--</option>';$main->LoadSection();echo '</select>
+			      <select class="input" onchange="next(1)" id="type"><option DISABLED SELECTED>--</option>'.$sections.'</select>
 			     </td>
 			    </tr>
 			    <tr id="var11" style="display:none;">
 			     <td class="block2">Подтип: </td>
 			     <td align="right">
-			      <select class="input" onchange="next(11)" id="subtype"><option DISABLED SELECTED>--</option>';$main->LoadSubType();echo '</select>
+			      <select class="input" onchange="next(11)" id="subtype"><option DISABLED SELECTED>--</option>'.$subtype.'</select>
 			     </td>
 			    </tr>
 			    <tr id="var2" style="display:none;">
@@ -383,38 +385,46 @@ class body implements html
 				if($cfg->get("LinkPlayer"))$charname = '<a href="'.$cfg->get("LinkPlayer").$charguid.'">'.$charname.'</a>';
 
 				$text = '
-				<table border="0" align="center" width="300" cellpadding="0" cellspacing="0">
+				<table border="0" align="center" width="324" cellpadding="0" cellspacing="0">
 				 <tr>
 				  <td class="block" width="100" align="left">Заголовок:</td>
 				  <td align="right"><input type="text" value="'.$all['title'].'" id="name" style="border:0px;width:100%;" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'"></td>
-				 </tr>
+				  <td width="88"></td>
+			     </tr>
 				 <tr>
-				  <td class="block" width="80" align="left">Приоритет:</td>
+				  <td class="block" align="left">Приоритет:</td>
 				  <td align="right"><select class="input" id="priority" style="border:0px;width:100%;">'.$main->LoadPriority($id,$all).'</select></td>
+				  <td></td>
 				 </tr>
 				 <tr>
-				  <td class="block" width="80" align="left">Статус:</td>
+				  <td class="block" align="left">Статус:</td>
 				  <td align="right"><select class="input" id="status" style="border:0px;width:100%;">'.$main->LoadStatus($id,$all).'</select></td>
+				  <td></td>
 				 </tr>
 				 <tr>
-				  <td class="block" width="80" align="left">Прогресс:</td>
+				  <td class="block" align="left">Прогресс:</td>
 				  <td align="right"><select class="input" id="progress" style="border:0px;width:100%;">'.$main->PercentList($id,$all).'</select></td>
+				  <td></td>
 				 </tr>
 				 <tr>
-				  <td class="block" width="80" align="left">Удалить?</td>
+				  <td class="block" align="left">Удалить?</td>
 				  <td align="right"><input type="checkbox" id="delete" onClick="if(this.checked)todelete(1);else todelete(2);"></td>
+				  <td></td>
 				 </tr>
 				 <tr>
 				  <td></td>
 				  <td align="right"><div class="butt" onClick="saveset()" id="spansave">Сохранить</div><br></td>
+				  <td></td>
 				 </tr>
 				 <tr>
-				  <td class="block" width="80" align="left">Аккаунт:</td>
+				  <td class="block" align="left">Аккаунт:</td>
 				  <td class="block" align="right">'.$username.'</td>
+				  <td></td>
 				 </tr>
 				 <tr>
-				  <td class="block" class="block" width="80" align="left">Персонаж:</td>
+				  <td class="block" class="block" align="left">Персонаж:</td>
 				  <td class="block" align="right">'.$charname.'</td>
+				  <td></td>
 				 </tr>
 				</table><span id="listid" style="display:none;">'.$id.'</span>';
 
@@ -502,7 +512,7 @@ class body implements html
 		else
 			$id = "0";
 		echo '<div class="border"><div id="hellotxt">';
-		echo 'Новых: <a href="index.php?a=list&type=1&sort=1&sortto=desc&last=1">'.$main->GetSections("new").'</a> | <a href="#">Панель управления</a>';
+		echo 'Новых: <a href="index.php?a=list&type=1&sort=1&sortto=desc&last=1">'.$main->GetSections("new").'</a> | <a href="index.php?a=admin">Управление БД</a> | <a href="index.php?a=admin&sort=1">Поиск и сортировка</a>';
 		
 		if(isset($_GET['a']) && $_GET['a'] == "list" && $main->GetSections("all") > "0")
 			echo ' | <a href="#" onClick="if(detail_view)window.location.href=\'index.php?a=admin&edit='.$id.'\';else{if(tr_select){tr_select=false;this.innerHTML=\'Изменить\';}else {tr_select=true;this.innerHTML=\'Отменить изменение\';}}">Изменить</a>';
@@ -580,6 +590,82 @@ class body implements html
 			$text = addslashes($_GET['edit']);
 			$this->edit($id,$text);
 		}
+		else
+		{
+			$this->adminconfig();
+		}
+	}
+	public function adminconfig()
+	{
+		global $user;
+		$cfg = new config;
+		$main = new main;
+				$text = '
+				<table border="0" align="center" width="324" cellpadding="0" cellspacing="0">
+				 <tr id="tr1">
+				  <td class="block" width="100" align="left" valign="top">Приоритет:</td>
+				  <td width="136px">
+				   <div id="select_1">
+				    <select class="input" id="priority" onchange="ViewImgOptions(1)" style="border:0px;width:100%;">
+				     <option value="-1">Добавить</option>
+				     <option DISABLED SELECTED>--</option>'.$main->LoadPriority(0,0,"color").'
+				    </select>
+				   </div>
+				   <div id="enter_1" style="display:none;">
+					<input id="input_1" type="text" value="Название" style="width:100%;" onFocus="if(this.value==\'Название\')this.value=\'\';" onBlur="if(this.value==\'\')this.value=\'Название\';"><br>
+					<input id="input_11" type="text" value="Цвет" style="width:100%;" onFocus="if(this.value==\'Цвет\')this.value=\'\';" onBlur="if(this.value==\'\')this.value=\'Цвет\';">
+				   </div>
+				   </td>
+				  <td align="left" width="88" valign="top"><div style="display:none;" id="img_1"></div></td>
+				 </tr>
+				 <tr id="tr2">
+				  <td class="block" width="100" align="left">Тип:</td>
+				  <td align="right">
+				   <div id="select_2">
+				    <select class="input" id="type" onchange="ViewImgOptions(2)" style="border:0px;width:100%;">
+				     <option value="-1">Добавить</option>
+				     <option DISABLED SELECTED>--</option>'.$main->LoadSection().'
+				    </select>
+				   </div>
+				   <div id="enter_2" style="display:none;">
+					<input id="input_2" type="text" value="Название" style="width:100%;" onFocus="if(this.value==\'Название\')this.value=\'\';" onBlur="if(this.value==\'\')this.value=\'Название\';">
+				   </div>
+				  </td>
+				  <td align="left" width="88" valign="top"><div style="display:none;" id="img_2"></div></td>
+				 </tr>
+				 <tr id="tr3">
+				  <td class="block" width="100" align="left">Подтип:</td>
+				  <td align="right">
+				   <div id="select_3">
+				    <select class="input" id="subtype" onchange="ViewImgOptions(3)" style="border:0px;width:100%;">
+				     <option value="-1">Добавить</option>
+				     <option DISABLED SELECTED>--</option>'.$main->LoadSubType().'
+				    </select>
+				   </div>
+				   <div id="enter_3" style="display:none;">
+					<input id="input_3" type="text" value="Название" style="width:100%;" onFocus="if(this.value==\'Название\')this.value=\'\';" onBlur="if(this.value==\'\')this.value=\'Название\';">
+				   </div>
+				  </td>
+				  <td align="left" width="88" valign="top"><div style="display:none;" id="img_3"></div></td>
+				 </tr>
+				 <tr id="tr4">
+				  <td class="block" width="100" align="left">Статус:</td>
+				  <td align="right">
+				   <div id="select_4">
+				    <select class="input" id="status" onchange="ViewImgOptions(4)" style="border:0px;width:100%;">
+				     <option value="-1">Добавить</option>
+				     <option DISABLED SELECTED>--</option>'.$main->LoadStatus().'
+				    </select>
+				   </div>
+				   <div id="enter_4" style="display:none;">
+					<input id="input_4" type="text" value="Название" style="width:100%;" onFocus="if(this.value==\'Название\')this.value=\'\';" onBlur="if(this.value==\'\')this.value=\'Название\';">
+				   </div>
+				  </td>
+				  <td align="left" width="88" valign="top"><div style="display:none;" id="img_4"></div></td>
+				 </tr>
+				</table>';
+
+				$this->block($text);
 	}
 	public function authorization($login,$pass)
 	{

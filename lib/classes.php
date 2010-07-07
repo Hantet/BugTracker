@@ -9,34 +9,34 @@ interface database
 
 interface create
 {
-	public function SelectMessage($id);
-	public function SelectOptions($id);
-	public function GetNewId();
-	public function GetNameByGUID($guid);
-	public function GetAccountNameById($id);
-	public function GetSections();
-	public function GetPercent($id,$one=false);
-	public function GetPriority($id,$one=false);
-	public function GetStatus($id,$one=false);
-	public function GetDate($format);
+	function SelectMessage($id);
+	function SelectOptions($id);
+	function GetNewId();
+	function GetNameByGUID($guid);
+	function GetAccountNameById($id);
+	function GetSections();
+	function GetPercent($id,$one=false);
+	function GetPriority($id,$one=false);
+	function GetStatus($id,$one=false);
+	function GetDate($format);
+	function GetPreviousElement($type,$change);
+	function SetStatus($statusid=-1,$id=-1);
 	
-	public function SetStatus($statusid=-1,$id=-1);
+	function LoadZones();
+	function LoadChar($acc);
+	function LoadStatus($id="0");
+	function LoadSection();
+	function LoadMap();
+	function LoadList($status="all");
+	function LoadPriority($id = "0");
+	function LoadView($id);
+	function LoadSubType();
 	
-	public function LoadZones();
-	public function LoadChar($acc);
-	public function LoadStatus($id="0");
-	public function LoadSection();
-	public function LoadMap();
-	public function LoadList($status="all");
-	public function LoadPriority($id = "0");
-	public function LoadView($id);
-	public function LoadSubType();
-	
-	public function login($login,$pass);
-	public function cookies($login,$pass);
-	public function AccountRepass($acc,$code);
-	public function isValidSection($id);
-	public function PercentList($id=0);
+	function login($login,$pass);
+	function cookies($login,$pass);
+	function AccountRepass($acc,$code);
+	function isValidSection($id);
+	function PercentList($id=0);
 }
 
 interface html
@@ -57,6 +57,7 @@ interface html
 	function success();
 	function inc($content);
 	function admin();
+	function adminconfig();
 	function CheckVersion();
 	function adminpanel();
 	function authorization($login,$pass);

@@ -21,6 +21,10 @@ text-decoration: underline;
 img {
 border: 0;
 }
+span {
+padding: 0;
+margin: 0;
+}
 form {
 padding: 0;
 margin: 0;

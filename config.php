@@ -50,7 +50,7 @@ class config
 		##		installquery:	Count of query for install. Do not change!
 		##################################################################################################*/
 		"CheckVersion"	=> false,
-		"version"		=> 23,
+		"version"		=> 24,
 		"checkdiff"		=> 2,
 		"installquery"	=> 212
 		);
