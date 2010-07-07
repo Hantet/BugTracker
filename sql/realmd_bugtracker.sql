@@ -102,6 +102,7 @@ INSERT INTO `bt_status` VALUES ('2', 'Реализация');
 INSERT INTO `bt_status` VALUES ('1', 'Решение');
 INSERT INTO `bt_status` VALUES ('3', 'Отбракован');
 INSERT INTO `bt_status` VALUES ('4', 'Готово');
+INSERT INTO `bt_status` VALUES ('5', 'Дубль');
 
 DROP TABLE IF EXISTS `bt_zone_id`;
 CREATE TABLE `bt_zone_id` (

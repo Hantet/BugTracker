@@ -43,14 +43,16 @@ class config
 		"searchlimit"	=> 10,
 		"lang"			=> 8,
 		/*##################################################################################################
-		## Announce of updates
+		## Admin settings
 		##		CheckVersion:	Check new version in git page of project (boolean).
 		##		version:		Current version of bug-tracker. Do not change!
 		##		checkdiff:		Different in days for recheck updates.
+		##		installquery:	Count of query for install. Do not change!
 		##################################################################################################*/
 		"CheckVersion"	=> false,
-		"version"		=> 22,
-		"checkdiff"		=> 2
+		"version"		=> 23,
+		"checkdiff"		=> 2,
+		"installquery"	=> 212
 		);
 		
 		if(in_array($id,array_keys($arr)))

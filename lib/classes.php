@@ -41,6 +41,7 @@ interface create
 
 interface html
 {
+	function install();
 	function send();
 	function viewall($int);
 	function viewdate($int);

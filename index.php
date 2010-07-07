@@ -6,6 +6,7 @@ require_once("special.php");
 
 $body = new body;
 $cfg = new config;
+$sql = new sql;
 
 if(isset($_COOKIE['wul']) && isset($_COOKIE['wup']) && $_COOKIE['wul'] != '' && $_COOKIE['wup'] != '')
 	$user = $body->cookies();
@@ -14,6 +15,16 @@ $body->header();
 
 if(isset($_POST['login']) && isset($_POST['passw']) && $user['id'] == "-1")
 	$body->failedlogin();
+
+if(file_exists("install.php"))
+{
+	if($sql->exe($cfg->get("realmd"),"SELECT 1 FROM `bt_message`"))
+		$body->block('Внимание!<br><br>Необходимо удалить файл <b>install.php</b> в корневой директории баг-трекера.');
+	else
+		$body->install();
+	$body->end();
+	exit();
+}
 
 if($user['id'] != "-1")
 	$body->success();

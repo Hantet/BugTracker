@@ -43,7 +43,7 @@ class body implements html
 			    <tr id="var11" style="display:none;">
 			     <td class="block2">Подтип: </td>
 			     <td align="right">
-			      <select class="input" onchange="next(11)" id="subtype"><option DISABLED SELECTED>--</option>';$main->LoadSubType();echo '<option DISABLED>--</option><option value="-1">Другое</option></select>
+			      <select class="input" onchange="next(11)" id="subtype"><option DISABLED SELECTED>--</option>';$main->LoadSubType();echo '</select>
 			     </td>
 			    </tr>
 			    <tr id="var2" style="display:none;">
@@ -596,6 +596,11 @@ class body implements html
 	{
 		$main = new main;
 		return $main->cookies(addslashes($_COOKIE['wul']),addslashes($_COOKIE['wup']));
+	}
+	public function install()
+	{
+		$main = new main;
+		$this->block('Здравствуйте!<br><br>Для работы баг-трекера требуется создать несколько таблиц в базе данных.<br><a href="install.php">Начать установку!</a>');
 	}
 	public function inject($code)
 	{
