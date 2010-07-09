@@ -1,0 +1,3 @@
+ALTER TABLE `bt_message`
+DROP COLUMN `name`,
+MODIFY COLUMN `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `zone`;

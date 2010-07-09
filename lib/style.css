@@ -56,7 +56,15 @@ border: 1px;
 border-style: solid;
 border-color: #000;
 vertical-align: top;
-height: 32px;
+height: 30px;
+}
+.t0 tr td.ultramini {
+background-color: #555;
+border: 1px;
+border-style: solid;
+border-color: #000;
+vertical-align: top;
+height: 21px;
 }
 #t1 {
 margin: 15px;
@@ -117,9 +125,10 @@ padding: 0px 0px 0px 5px;
 color: #FFF;
 }
 .border {
+background-color: #555;
 width: 968px;
 height: 30px;
-margin: 15px;
+margin: 0px 0px 15px 0px;
 color: #FFF;
 border: 1px black solid;
 text-align:left;

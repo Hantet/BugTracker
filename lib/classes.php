@@ -33,7 +33,7 @@ interface create
 	function LoadMap();
 	function LoadList($status="all");
 	function LoadPriority($id = "0");
-	function LoadView($id);
+	function LoadView($id,$type);
 	function LoadSubType();
 	
 	function login($login,$pass);

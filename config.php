@@ -30,7 +30,7 @@ class config
 		##		LinkAccount:	Link to page on deatil view account or false if it is not necessary.
 		##		LinkPlayer:		Link to page on deatil view character or false if it is not necessary.
 		##		searchlimit:	Limit of query for search (query, creature, item, etc).
-		##		lang:			Translate search result to russian language? (8: russian, 1: english) 
+		##		lang:			Translate search result to russian language? (8: russian, 1: english).
 		##################################################################################################*/
 		"title"			=> "Баг-трекер",
 		"mingm"			=> 3,
@@ -40,7 +40,7 @@ class config
 		"anim"			=> false,
 		"LinkAccount"	=> "http://localhost/admin/account.php?id=",
 		"LinkPlayer"	=> "http://localhost/admin/player.php?guid=",
-		"searchlimit"	=> 5,
+		"searchlimit"	=> 17,
 		"lang"			=> 8,
 		/*##################################################################################################
 		## Admin settings
@@ -50,9 +50,27 @@ class config
 		##		installquery:	Count of query for install. Do not change!
 		##################################################################################################*/
 		"CheckVersion"	=> false,
-		"version"		=> 24,
+		"version"		=> 26,
 		"checkdiff"		=> 2,
-		"installquery"	=> 212
+		"installquery"	=> 213,
+		/*##################################################################################################
+		## Outer resources
+		##		Database:		Link to the wow database site. Default: http://ru.wowhead.com/.
+		##		wd_quest:		http://ru.wowhead.com/quest=. Default: quest.
+		##		wd_item:		http://ru.wowhead.com/item=. Default: item.
+		##		wd_npc:			http://ru.wowhead.com/npc=. Default: npc.
+		##		wd_object:		http://ru.wowhead.com/object=. Default: object.
+		##
+		##		Example:		http://wowdata.ru/item.html?id=26051
+		##
+		##						"http://wowdata.ru/" - is Database.
+		##						"item.html?id=" - is wd_item.
+		*/##################################################################################################
+		"Database"		=> "http://ru.wowhead.com/",
+		"wd_quest"		=> "quest=",
+		"wd_item"		=> "item=",
+		"wd_npc"		=> "npc=",
+		"wd_object"		=> "object="
 		);
 		
 		if(in_array($id,array_keys($arr)))

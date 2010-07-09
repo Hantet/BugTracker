@@ -21,43 +21,53 @@ class body implements html
 		  <td width="236px" valign="top">
 		   <table class="t2" border="0" cellpadding="0" cellspacing="0" align="center">
 		    <tr>
+		     <td class="block2">Персонаж:</td>
+		     <td align="right"><select class="input" id="player"><option DISABLED SELECTED value="0"></option>'.$main->LoadChar($user['id']).'</select></td>
+		    </tr>
+		    <tr>
+		     <td class="block2">Тип:</td>
+		     <td align="right"><select class="input" onchange="next(1)" id="type"><option DISABLED SELECTED value="0"></option>'.$main->LoadSection().'</select></td>
+		    </tr>
+			<tr>
+			 <td class="block2">Подтип:</td>
+			 <td align="right"><select class="input" onchange="next(2)" id="subtype" DISABLED><option DISABLED SELECTED value="0"></option>'.$main->LoadSubType().'</select></td>
+			</tr>
+		    <tr>
+		     <td class="block2">Местность:</td>
+		     <td align="right"><select class="input" onchange="ChangeZones(this.options[this.selectedIndex].value);next(3)" id="map" DISABLED><option DISABLED SELECTED value="0"></option>'.$main->LoadMap().'</select></td>
+		    </tr>
+		    <tr>
+		     <td class="block2">Зона: </td>
+		     <td align="right"><select class="input" onchange="next(4)" id="zone" DISABLED><option DISABLED SELECTED value="0"></option></select></td>
+		    </tr>
+		    <tr>
 			 <td class="block2">Заголовок:</td>
 			 <td align="right"><input id="title" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text"></td>
 			</tr>
 		    <tr>
-		     <td class="block2">Персонаж:</td>
-		     <td align="right"><select class="input" onchange="next(0)" id="player"><option DISABLED SELECTED>--</option>'.$main->LoadChar($user['id']).'</select></td>
-		    </tr>
-		    <tr>
-		     <td class="block2">Тип:</td>
-		     <td align="right"><select class="input" onchange="next(1)" id="type"><option DISABLED SELECTED>--</option>'.$main->LoadSection().'</select></td>
-		    </tr>
-			<tr>
-			 <td class="block2">Подтип:</td>
-			 <td align="right"><select class="input" onchange="next(2)" id="subtype"><option DISABLED SELECTED>--</option>'.$main->LoadSubType().'</select></td>
-			</tr>
-		    <tr>
-		     <td class="block2">Местность:</td>
-		     <td align="right"><select class="input" onchange="ChangeZones(this.options[this.selectedIndex].value);next(3)" id="map"><option DISABLED SELECTED>--</option>'.$main->LoadMap().'</select></td>
-		    </tr>
-		    <tr>
-		     <td class="block2">Зона: </td>
-		     <td align="right"><select class="input" onchange="next(4)" id="zone"></select></td>
-		    </tr>
-		    <tr>
 		     <td class="block2">Название:</td>
-		     <td align="right"><input id="name" onKeyUp="searchfor(this.value)" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text"></td>
+		     <td align="right"><input id="name" onKeyUp="searchfor(this.value)" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text" READONLY></td>
 		    </tr>
 		    <tr>
-		     <td class="block2">Ссылка: </td>
-		     <td align="right"><input id="db" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text"></td>
+		     <td class="block2"></td>
+		     <td align="right"><div class="butt" onClick="tolink()">Отправить</div></td>
 		    </tr>
+			<tr style="height:10px;"><td></td><td></td></tr>
+			<tr style="height:1px;background-color: #000;"><td></td><td></td></tr>
+			<tr style="height:5px;"><td></td><td></td></tr>
 		   </table>
-		   <div id="searchview" style="display:none;"></div>
+		   <div class="pad">Ссылки:<br><br>
+		    <div id="links"></div>
+		   </div>
 		  </td>
 		  <td width="1px" style="background-color: #000;"></td>
+		  <td valign="top">
+		   <div id="searchview" style="display:none;"></div>
+		  </td>
 		 </tr>
-		</table>';
+		</table>
+		<span id="userid" style="display:none;">'.$user['id'].'</span>
+		<span id="linkslist" style="display:none;"></span>';
 		$this->blocknot($text);
 		}
 	}
@@ -148,10 +158,14 @@ class body implements html
 		     <td class="block3" align="right" id="map">'.$main->GetMap($all['map']).'</td>
 		    </tr>
 		    <tr>
-		     <td class="block2">Зона: </td>
-		     <td class="block3" align="right" id="zone">'.$all['zone'].'</td>
+		     <td class="block2" valign="top">Зона: </td>
+		     <td class="block3" align="right" id="zone">'.$main->GetZone($all['zone']).'</td>
 		    </tr>
+			<tr style="height:10px;"><td></td><td></td></tr>
+			<tr style="height:1px;background-color: #000;"><td></td><td></td></tr>
+			<tr style="height:5px;"><td></td><td></td></tr>
 		   </table>
+		   <div class="pad">Ссылки:<div align="right">'.$main->LoadView($opt,$all['type']).'</div></div>
 		  </td>
 		  <td width="1px" style="background-color: #000;"></td>
 		  <td valign="top" width="365px">
@@ -208,7 +222,7 @@ class body implements html
 			  <td><div class="pad"><b>Заголовок</b></div></td>
 			 </tr></table>';
 			$this->blocknot($text);
-			$text = '<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0" align="left">';
+			$text = '<table width="100%" height="19px" border="0" cellpadding="0" cellspacing="0" align="left">';
 			$psort = '';
 			if(isset($_GET['sort']) && intval($_GET['sort']) > 0 && $_GET['sort'] > "0" && $_GET['sort'] < "6")
 			{
@@ -228,6 +242,20 @@ class body implements html
 			$sql = new sql;
 			while($row=$sql->fetch($result))
 			{
+				if($m > 0)
+				{
+					$text.= '
+					<tr style="height:1px;background-color: #000;">
+					 <td></td><td></td><td></td>
+					 <td></td><td></td><td></td>
+					 <td></td><td></td><td></td>';
+				if($cfg->get("progressbar"))
+					$text.= '
+					 <td></td><td></td>';
+				$text.= '
+					</tr>';
+				}
+				
 				$all = $main->SelectMessage($row['id']);
 				$opt = $main->SelectOptions($row['id']);
 
@@ -236,24 +264,24 @@ class body implements html
 				$pix = str_replace("%","",$pcn)*1.25;
 				$stream = 'stream'.$row['id'];
 				$width = ($cfg->get("anim") == true) ? 0 : $pix;
-				$img = '<div id="stream'.$m.'" style="height:30px;width:'.$width.'px;background-color:#006400;"></div>';
+				$img = '<div id="stream'.$m.'" style="height:19px;width:'.$width.'px;background-color:#006400;"></div>';
 			
 				$text.= '
 				<tr style="background-color: #666;" onClick="if(tr_select)window.location.href=\'index.php?a=admin&edit='.$row['id'].'\';else window.location.href=\'index.php?a=list&detail='.$row['id'].'\';" onMouseover="this.style.cursor=\'pointer\';this.style.backgroundColor=\'#888\';" onMouseout="this.style.cursor=\'default\';this.style.backgroundColor=\'#666\';">
-				<td width="'.$mass[1][0].'" class="view"><div class="pad">'.$row['id'].'</div></td>
-				<td width="1px" style="background-color: #000;"></td>
-				<td width="'.$mass[2][0].'" class="view"><div class="pad">'.$main->GetNameByGUID(intval($row['sender'])).'</div></td>
-				<td width="1px" style="background-color: #000;"></td>';
+				 <td width="'.$mass[1][0].'" class="view"><div class="pad">'.$row['id'].'</div></td>
+				 <td width="1px" style="background-color: #000;"></td>
+				 <td width="'.$mass[2][0].'" class="view"><div class="pad">'.$main->GetNameByGUID(intval($row['sender'])).'</div></td>
+				 <td width="1px" style="background-color: #000;"></td>';
 				if($cfg->get("progressbar"))
 					$text.= '
-				<td width="'.$mass[3][0].'" class="view" style="padding:0;margin:0;">'.$img.'</td>
-				<td width="1px" style="background-color: #000;"></td>';
+				 <td width="'.$mass[3][0].'" class="view" style="padding:0;margin:0;">'.$img.'</td>
+				 <td width="1px" style="background-color: #000;"></td>';
 				$text.= '
-				<td width="'.$mass[4][0].'" class="view"><div class="pad">'.$main->GetStatus($all).'</div></td>
-				<td width="1px" style="background-color: #000;"></td>
-				<td width="'.$mass[5][0].'" class="view"><div class="pad">'.$main->GetPriority($all).'</div></td>
-				<td width="1px" style="background-color: #000;"></td>
-				<td class="view"><div class="pad"><div id="namelimit1" title="'.$title.'"><div style="position:absolute;">'.$title.'</div></div></div></td>
+				 <td width="'.$mass[4][0].'" class="view"><div class="pad">'.$main->GetStatus($all).'</div></td>
+				 <td width="1px" style="background-color: #000;"></td>
+				 <td width="'.$mass[5][0].'" class="view"><div class="pad">'.$main->GetPriority($all).'</div></td>
+				 <td width="1px" style="background-color: #000;"></td>
+				 <td class="view"><div class="pad"><div id="namelimit1" title="'.$title.'"><div style="position:absolute;">'.$title.'</div></div></div></td>
 				</tr>';
 
 				if($cfg->get("anim") && $pix > "0")
@@ -264,7 +292,10 @@ class body implements html
 			}
 			$text.= '</table>';
 			$text.= '<script>'.$js.'</script>';
-			$this->blocknot($text);
+			if($m > 1)
+				$this->blocknot($text);
+			else if($m > 0)
+				$this->blocknot($text,'','','ultramini');
 		}
 		else
 		{
@@ -391,13 +422,13 @@ class body implements html
 		 </tr>
 		</table>';
 	}
-	public function blocknot($text,$style='',$id='')
+	public function blocknot($text,$style='',$id='',$subclass='mini')
 	{
 		if($id)$id='id="'.$id.'"';
 		echo '
 		<table class="t0" '.$id.' cellpadding="0" cellspacing="0" align="center" style="'.$style.'">
 		 <tr>
-		  <td class="mini">'.$text.'</td>
+		  <td class="'.$subclass.'">'.$text.'</td>
 		 </tr>
 		</table>';
 	}

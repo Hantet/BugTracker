@@ -82,7 +82,12 @@ class main implements create
 	}
 	public function GetZone($id)
 	{
-
+		$cfg = new config;
+		$sql = new sql;
+		$result = $sql->res($cfg->get("realmd"),"SELECT `name` FROM `bt_zone_id` WHERE `zone` = '".$id."'");
+		if(!$result)
+			$result = '--';
+		return $result;
 	}
 	public function GetPercent($all,$one=false)
 	{
@@ -338,24 +343,25 @@ class main implements create
 		return $txt;
 	}
 	
-	public function LoadView($opt)
+	public function LoadView($opt,$type)
 	{
 		$cfg = new config;
 		$sql = new sql;
 		global $user;
-		$u=0;
 		$text = '';
-		$text.= '<div id="link">';
 		while($row=$sql->fetch($opt))
 		{
-			$name = $this->GetNameByGUID(intval($row['guid']));
-			if($user['gmlevel'] >= $cfg->get("mingm"))
-				$name = '<a href="'.$cfg->get("LinkPlayer").intval($row['guid']).'">'.$name.'</a>';
-			$text.= '<div id="unic'.$u.'"><a href="javascript:viewdiv('.$u.')"><span style="position:relative;top:2px;" title="Просмотр"><img src="img/lens.png"></a></span> ['.$name.'] <a target="_blank" href="'.$row['link'].'">'.$row['name'].'</a><br></div>';
-			$text.= '<div id="save'.$u.'" style="display:none;">'.$row['method'].'^'.$row['guid'].'^'.$row['type'].'^'.$row['subtype'].'^'.$row['map'].'^'.$row['zone'].'^'.$row['name'].'^'.$row['link'].'</div>';
-			$u++;
+			switch($type)
+			{
+				case 2: $tbl = $cfg->get("lang") == 8 ? 'locales_quest' : 'quest_template';$field = 'Title_loc8';$tblt = $cfg->get("wd_quest");break;
+				case 3: $tbl = $cfg->get("lang") == 8 ? 'locales_item' : 'item_template';$field = 'name_loc8';$tblt = $cfg->get("wd_item");break;
+				case 4:	$tbl = $cfg->get("lang") == 8 ? 'locales_creature' : 'creature_template';$field = 'name_loc8';$tblt = $cfg->get("wd_npc");break;
+				case 5: $tbl = $cfg->get("lang") == 8 ? 'locales_gameobject' : 'gameobject_template';$field = 'name_loc8';$tblt = $cfg->get("wd_object");break;
+			}
+			$id = explode($tblt,$row['link']);
+			$name = $sql->res($cfg->get("mangos"),"SELECT `".$field."` FROM `".$tbl."` WHERE `entry` = '".$id[1]."'");
+			$text.= '<a href="'.$row['link'].'" target="_blank">'.$name.'</a><br>';
 		}
-		$text.= '</div>';
 		return $text;
 	}
 	

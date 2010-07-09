@@ -32,7 +32,6 @@ CREATE TABLE `bt_message` (
   `subtype` int(11) NOT NULL DEFAULT 0,
   `map` int(11) NOT NULL DEFAULT 0,
   `zone` int(11) NOT NULL DEFAULT 0,
-  `name` varchar(20) NOT NULL,
   `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=cp1251;
