@@ -25,23 +25,21 @@ CREATE TABLE `bt_message` (
   `status` int(11) NOT NULL default '0',
   `percentage` int(3) NOT NULL default '0',
   `priority` int(1) NOT NULL,
-  `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `type` int(11) NOT NULL DEFAULT 0,
   `text_1` longtext NOT NULL,
   `text_2` longtext NOT NULL,
   `text_3` longtext NOT NULL,
+  `subtype` int(11) NOT NULL DEFAULT 0,
+  `map` int(11) NOT NULL DEFAULT 0,
+  `zone` int(11) NOT NULL DEFAULT 0,
+  `name` varchar(20) NOT NULL,
+  `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=cp1251;
 
 DROP TABLE IF EXISTS `bt_options`;
 CREATE TABLE `bt_options` (
   `id` int(11) NOT NULL,
-  `method` int(11) NOT NULL DEFAULT 2,
-  `guid` int(11) NOT NULL,
-  `map` int(11) NOT NULL,
-  `zone` int(11) NOT NULL,
-  `subtype` int(11) NOT NULL,
-  `type` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL,
   `link` varchar(50) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=cp1251;
 

@@ -7,98 +7,73 @@ class body implements html
 		$cfg = new config;
 		$main = new main;
 		$main->LoadZones();
-		$sections = $main->LoadSection();
-		$subtype = $main->LoadSubType();
 		if($user['id'] > "-1")
 		{
-			echo '
-			<table border="1" id="t1" cellpadding="0" cellspacing="0" align="center">
-			 <tr>
-			  <td width="400px" class="block"><div class="pad">Сейчас так:</div>
-			   <textarea class="textarea" id="area1" style="height:80px;"></textarea><div class="pad">А должно быть так:</div>
-			   <textarea class="textarea" id="area2" style="height:80px;"></textarea><div class="pad">Пояснение:</div>
-			   <textarea class="textarea" id="area3"></textarea>
-			   <div align="right"><div class="butt" onClick="send()">Отправить</div></div>
-			  </td>
-			  <td class="block">
-			   <table class="t2" border="0" cellpadding="0" cellspacing="0" align="center">
-			    <tr>
-			     <td class="block2">Заголовок: </td>
-			     <td align="right">
-			      <input id="area4" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text">
-			     </td>
-			    </tr>
-			   </table>
-			   <table class="t2" id="t2" border="0" cellpadding="0" cellspacing="0" align="center">
-			    <tr>
-			     <td class="block2">Персонаж: </td>
-			     <td align="right">
-			      <select class="input" onchange="next(0)" id="player"><option DISABLED SELECTED>--</option>';$main->LoadChar($user['id']);echo '</select>
-			     </td>
-			    </tr>
-			    <tr id="var1" style="display:none;">
-			     <td class="block2">Тип: </td>
-			     <td align="right">
-			      <select class="input" onchange="next(1)" id="type"><option DISABLED SELECTED>--</option>'.$sections.'</select>
-			     </td>
-			    </tr>
-			    <tr id="var11" style="display:none;">
-			     <td class="block2">Подтип: </td>
-			     <td align="right">
-			      <select class="input" onchange="next(11)" id="subtype"><option DISABLED SELECTED>--</option>'.$subtype.'</select>
-			     </td>
-			    </tr>
-			    <tr id="var2" style="display:none;">
-			     <td class="block2">Местность: </td>
-			     <td align="right">
-			      <select class="input" onchange="ChangeZones(this.options[this.selectedIndex].value);next(2)" id="map"><option DISABLED SELECTED>--</option>';$main->LoadMap();echo '</select>
-			     </td>
-			    </tr>
-			    <tr id="var3" style="display:none;">
-			     <td class="block2">Зона: </td>
-			     <td align="right">
-			      <select class="input" onchange="next(3)" id="zone"></select>
-			     </td>
-			    </tr>
-			    <tr id="var4" style="display:none;">
-			     <td class="block2" valign="top">Название: </td>
-			     <td align="right">
-			      <input id="name" onKeyUp="searchfor(this.value)" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text">
-			     </td>
-			    </tr>
-			    <tr id="var5" style="display:none;">
-			     <td class="block2">Wowhead ссылка: </td>
-			     <td align="right">
-			      <input id="db" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text">
-			     </td>
-			    </tr> 
-			   </table>
-			   <div id="searchview" style="display:none;"></div>
-			   <div align="right"><div id="var6" class="butt" style="display:none;" onClick="tolink()"><span id="retype">Добавить</span></div></div>
-			   <div id="link"></div>
-			   <div id="saveblock" style="display:none;"></div>
-			   <div align="right"><span id="ajaximg" style="visibility:hidden;"><img src="img/1.gif"></span></div>
-			  </td>
-			 </tr>
-			</table>
-			<span id="userid" style="display:none;">'.$user['id'].'</span>';
+		$text = '
+		<table height="100%" border="0" cellpadding="0" cellspacing="0" align="left">
+		 <tr>
+		  <td width="365px" valign="top"><div class="pad">Сейчас так:</div>
+		   <textarea class="textarea" id="area1" style="height:80px;"></textarea><div class="pad">А должно быть так:</div>
+		   <textarea class="textarea" id="area2" style="height:80px;"></textarea><div class="pad">Пояснение:</div>
+		   <textarea class="textarea" id="area3"></textarea>
+		  </td>
+		  <td width="1px" style="background-color: #000;"></td>
+		  <td width="236px" valign="top">
+		   <table class="t2" border="0" cellpadding="0" cellspacing="0" align="center">
+		    <tr>
+			 <td class="block2">Заголовок:</td>
+			 <td align="right"><input id="title" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text"></td>
+			</tr>
+		    <tr>
+		     <td class="block2">Персонаж:</td>
+		     <td align="right"><select class="input" onchange="next(0)" id="player"><option DISABLED SELECTED>--</option>'.$main->LoadChar($user['id']).'</select></td>
+		    </tr>
+		    <tr>
+		     <td class="block2">Тип:</td>
+		     <td align="right"><select class="input" onchange="next(1)" id="type"><option DISABLED SELECTED>--</option>'.$main->LoadSection().'</select></td>
+		    </tr>
+			<tr>
+			 <td class="block2">Подтип:</td>
+			 <td align="right"><select class="input" onchange="next(2)" id="subtype"><option DISABLED SELECTED>--</option>'.$main->LoadSubType().'</select></td>
+			</tr>
+		    <tr>
+		     <td class="block2">Местность:</td>
+		     <td align="right"><select class="input" onchange="ChangeZones(this.options[this.selectedIndex].value);next(3)" id="map"><option DISABLED SELECTED>--</option>'.$main->LoadMap().'</select></td>
+		    </tr>
+		    <tr>
+		     <td class="block2">Зона: </td>
+		     <td align="right"><select class="input" onchange="next(4)" id="zone"></select></td>
+		    </tr>
+		    <tr>
+		     <td class="block2">Название:</td>
+		     <td align="right"><input id="name" onKeyUp="searchfor(this.value)" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text"></td>
+		    </tr>
+		    <tr>
+		     <td class="block2">Ссылка: </td>
+		     <td align="right"><input id="db" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text"></td>
+		    </tr>
+		   </table>
+		   <div id="searchview" style="display:none;"></div>
+		  </td>
+		  <td width="1px" style="background-color: #000;"></td>
+		 </tr>
+		</table>';
+		$this->blocknot($text);
 		}
 	}
 	public function viewall($all)
 	{
+		global $user;
+		$cfg = new config;
 		$main = new main;
 		$title = $all['title'];
-		$priority = $main->GetPriority($all);
-		$text = 'Приоритет: <b>'.$priority.'</b> | Название: <b>'.$title.'</b>';
-		return $text;
-	}
-	public function viewdate($all)
-	{
 		$date = $all['date'];
+		$priority = $main->GetPriority($all);
+
 		$exp_date = explode("-",$date);
 		$exp_space = explode(" ",$exp_date[2]);
 		$exp_time = explode(":",$exp_space[1]);
-		
+
 		$year = $exp_date[0];
 		$month = $exp_date[1];
 		$day = $exp_space[0];
@@ -106,65 +81,31 @@ class body implements html
 		$hours = $exp_time[0];
 		$minute = $exp_time[1];
 		$seconds = $exp_time[2];
-		
-		$lit_m = array(
-			"01"	=>	"января",
-			"02"	=>	"февраля",
-			"03"	=>	"марта",
-			"04"	=>	"апреля",
-			"05"	=>	"мая",
-			"06"	=>	"июня",
-			"07"	=>	"июля",
-			"08"	=>	"августа",
-			"09"	=>	"сентября",
-			"10"	=>	"октября",
-			"11"	=>	"ноября",
-			"12"	=>	"декабря"
-		);
-		
-		$lit_d = array(
-			"01"	=>	"первого",
-			"02"	=>	"второго",
-			"03"	=>	"третьего",
-			"04"	=>	"четвёртого",
-			"05"	=>	"пятого",
-			"06"	=>	"шестого",
-			"07"	=>	"седьмого",
-			"08"	=>	"восьмого",
-			"09"	=>	"девятого",
-			"10"	=>	"десятого",
-			"11"	=>	"одиннадцатого",
-			"12"	=>	"двинадцатого",
-			"13"	=>	"тринадцатого",
-			"14"	=>	"четырнадцатого",
-			"15"	=>	"пятнадцатого",
-			"16"	=>	"шестнадцатого",
-			"17"	=>	"семнадцатого",
-			"18"	=>	"восемнадцатого",
-			"19"	=>	"девятнадцатого",
-			"20"	=>	"двадцатого",
-			"21"	=>	"двадцать первого",
-			"22"	=>	"двадцать второго",
-			"23"	=>	"двадцать третьего",
-			"24"	=>	"двадцать четвёртого",
-			"25"	=>	"двадцать пятого",
-			"26"	=>	"двадцать шестого",
-			"27"	=>	"двадцать седьмого",
-			"28"	=>	"двадцать восьмого",
-			"29"	=>	"двадцать девятого",
-			"30"	=>	"тридцатого",
-			"31"	=>	"тридцать первого"
-		);
-		
-		$text = $hours.':'.$minute.':'.$seconds.', '.$lit_d[$day].' '.$lit_m[$month].' '.$year.' года';
+
+		$text = '
+		<table border="0" height="100%" cellpadding="0" cellspacing="0" align="left">
+		 <tr>
+		  <td><div class="pad">'.$day.'.'.$month.'.'.$year.'</div></td>
+		  <td width="1px" style="background-color: #000;"></td>
+		  <td><div class="pad">'.$hours.':'.$minute.':'.$seconds.'</div></td>
+		  <td width="1px" style="background-color: #000;"></td>
+		  <td><div class="pad">Приоритет: <b>'.$priority.'</b></div></td>
+		  <td width="1px" style="background-color: #000;"></td>
+		  <td><div class="pad">Название: <b>'.$title.'</b></div></td>
+		 </tr>
+		</table>';
 		return $text;
 	}
 	public function progress($all)
 	{
 		$pcn = $all['percentage'];
-		$pix = str_replace("%","",$pcn)*6.55;
-		$img = '<div style="height:19px;width:'.$pix.'px;background-color:#006400;"></div>';
-		$text = '<div class="statusborder">'.$img.'</div>';
+		$pix = str_replace("%","",$pcn)*9.55;
+		$text = '
+		<table border="0" height="100%" cellpadding="0" cellspacing="0" align="left">
+		 <tr>
+		  <td><div class="pad"><div style="height:20px;width:'.$pix.'px;background-color:#006400;"></div></div></td>
+		 </tr>
+		</table>';
 		return $text;
 	}
 	public function detail($int)
@@ -175,77 +116,50 @@ class body implements html
 		$main->LoadZones();
 		$all = $main->SelectMessage($int);
 		$opt = $main->SelectOptions($int);
-		$this->block($this->viewall($all));
-		$this->block($this->viewdate($all));
-		$this->block($this->progress($all));
+		$this->blocknot($this->viewall($all));
+		$this->blocknot($this->progress($all));
+
 		echo '<script>detail_view=true;</script>';
-		echo '
-		<table border="1" id="t1" cellpadding="0" cellspacing="0" align="center">
+		$text = '
+		<table height="100%" border="0" cellpadding="0" cellspacing="0" align="left">
 		 <tr>
-		  <td width="400px" class="block"><div class="pad">Сейчас так:</div>
+		  <td width="365px"><div class="pad">Сейчас так:</div>
 		   <textarea class="textarea" id="area1" style="height:80px;" READONLY>'.$all['text_1'].'</textarea><div class="pad">А должно быть так:</div>
 		   <textarea class="textarea" id="area2" style="height:80px;" READONLY>'.$all['text_2'].'</textarea><div class="pad">Пояснение:</div>
 		   <textarea class="textarea" id="area3" READONLY>'.$all['text_3'].'</textarea>
 		  </td>
-		  <td class="block">
-		   <table class="t2" id="t2" border="0" cellpadding="0" cellspacing="0" align="center">
-		    <tr style="display:none;">
-		     <td class="block2">Персонаж: </td>
-		     <td align="right">
-		      <select id="player"></select>
-		     </td>
+		  <td width="1px" style="background-color: #000;"></td>
+		  <td width="236px" valign="top">
+		   <table class="t2" border="0" cellpadding="0" cellspacing="0" align="center">
+		    <tr>
+		     <td class="block2">Персонаж:</td>
+		     <td class="block3" align="right" id="player">'.$main->GetNameByGUID($all['sender']).'</td>
 		    </tr>
-		    <tr id="var1" style="display:none;">
-		     <td class="block2">Тип: </td>
-		     <td align="right">
-		      <select class="input" onchange="next(1)" id="type"><option DISABLED SELECTED>--</option>';$main->LoadSection();echo '</select>
-		     </td>
+		    <tr>
+		     <td class="block2">Тип:</td>
+		     <td class="block3" align="right" id="type">'.$main->GetSectionById($all['type']).'</td>
 		    </tr>
-			<tr id="var11" style="display:none;">
-			 <td class="block2">Подтип: </td>
-			 <td align="right">
-			  <select class="input" onchange="next(11)" id="subtype"><option DISABLED SELECTED>--</option>';$main->LoadSubType();echo '<option DISABLED>--</option><option value="-1">Другое</option></select>
-			 </td>
+			<tr>
+			 <td class="block2">Подтип:</td>
+			 <td class="block3" align="right" id="subtype">'.$main->GetSubType($all['subtype']).'</td>
 			</tr>
-		    <tr id="var2" style="display:none;">
-		     <td class="block2">Местность: </td>
-		     <td align="right">
-		      <select class="input" onchange="ChangeZones(this.options[this.selectedIndex].value);next(2)" id="map"><option DISABLED SELECTED>--</option>';$main->LoadMap();echo '</select>
-		     </td>
+		    <tr>
+		     <td class="block2">Местность:</td>
+		     <td class="block3" align="right" id="map">'.$main->GetMap($all['map']).'</td>
 		    </tr>
-		    <tr id="var3" style="display:none;">
+		    <tr>
 		     <td class="block2">Зона: </td>
-		     <td align="right">
-		      <select class="input" onchange="next(3)" id="zone"></select>
-		     </td>
+		     <td class="block3" align="right" id="zone">'.$all['zone'].'</td>
 		    </tr>
-		    <tr id="var4" style="display:none;">
-		     <td class="block2">Название: </td>
-		     <td align="right">
-		      <input id="name" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text">
-		     </td>
-		    </tr>
-		    <tr id="var5" style="display:none;">
-		     <td class="block2">Wowhead ссылка: </td>
-		     <td align="right">
-		      <input id="db" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text">
-		     </td>
-		    </tr> 
 		   </table>
-		   <div align="right"><div id="var6" class="butt" style="display:none;" onClick="tolink()"><span id="retype">Добавить</span></div></div>';
-		   $main->LoadView($opt);echo '
+		  </td>
+		  <td width="1px" style="background-color: #000;"></td>
+		  <td valign="top" width="365px">
+		   <div class="pad">Комментарии:</div>
 		  </td>
 		 </tr>
 		</table>';
-
-		if($user['gmlevel'] >= $cfg->get("mingm"))
-		{
-			$text = '
-			<div align="right">
-			 Быстрый ответ: <select id="fastchange0" onchange="fastchangestatus('.$all['id'].')">'.$main->LoadStatus(1,$all).'</select>
-			</div>';
-			$this->block($text);
-		}
+		$this->blocknot($text);
 	}
 	public function view()
 	{
@@ -280,17 +194,21 @@ class body implements html
 				3 => array("100px","Прогресс"),
 				4 => array("100px","Статус"),
 				5 => array("100px","Приоритет"));
-
-			echo '
-			<table border="1" id="t1" cellpadding="0" cellspacing="0" align="center">
+				
+			$text = '
+			<table height="100%" border="0" cellpadding="0" cellspacing="0" align="left">
 			 <tr>';
 			for($i=1;$i<count($mass)+1;$i++)
 				if(($i == 3 && $cfg->get("progressbar")) || $i != 3)
-					echo '<td class="view" style="width:'.$mass[$i][0].';" onClick="window.location.href=\''.$href.'&sort='.$i.'&sortto='.$sortto.'&last='.$sort.'\';" onMouseover="this.style.cursor=\'pointer\';this.style.backgroundColor=\'#777\';" onMouseout="this.style.cursor=\'default\';this.style.backgroundColor=\'#666\';"><b>'.$mass[$i][1].'</b></td>';
-			echo '
-			  <td class="view"><b>Заголовок</b></td>
-			 </tr>';
-
+				{
+					$text.= '<td style="width:'.$mass[$i][0].';background-color:#666;" onClick="window.location.href=\''.$href.'&sort='.$i.'&sortto='.$sortto.'&last='.$sort.'\';" onMouseover="this.style.cursor=\'pointer\';this.style.backgroundColor=\'#777\';" onMouseout="this.style.cursor=\'default\';this.style.backgroundColor=\'#666\';"><div class="pad"><b>'.$mass[$i][1].'</b></div></td>';
+					$text.= '<td width="1px" style="background-color: #000;"></td>';
+				}
+			$text.= '
+			  <td><div class="pad"><b>Заголовок</b></div></td>
+			 </tr></table>';
+			$this->blocknot($text);
+			$text = '<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0" align="left">';
 			$psort = '';
 			if(isset($_GET['sort']) && intval($_GET['sort']) > 0 && $_GET['sort'] > "0" && $_GET['sort'] < "6")
 			{
@@ -315,22 +233,27 @@ class body implements html
 
 				$title = $all['title'];
 				$pcn = $main->GetPercent($all);
-				$pix = str_replace("%","",$pcn)*1.05;
+				$pix = str_replace("%","",$pcn)*1.25;
 				$stream = 'stream'.$row['id'];
 				$width = ($cfg->get("anim") == true) ? 0 : $pix;
-				$img = '<div id="stream'.$m.'" style="height:19px;width:'.$width.'px;background-color:#006400;"></div>';
+				$img = '<div id="stream'.$m.'" style="height:30px;width:'.$width.'px;background-color:#006400;"></div>';
 			
-				echo '
-				<tr onClick="if(tr_select)window.location.href=\'index.php?a=admin&edit='.$row['id'].'\';else window.location.href=\'index.php?a=list&detail='.$row['id'].'\';" onMouseover="this.style.cursor=\'pointer\';this.style.backgroundColor=\'#888\';" onMouseout="this.style.cursor=\'default\';this.style.backgroundColor=\'#666\';">
-				<td class="view">'.$row['id'].'</td>
-				<td class="view">'.$main->GetNameByGUID(intval($row['sender'])).'</td>';
+				$text.= '
+				<tr style="background-color: #666;" onClick="if(tr_select)window.location.href=\'index.php?a=admin&edit='.$row['id'].'\';else window.location.href=\'index.php?a=list&detail='.$row['id'].'\';" onMouseover="this.style.cursor=\'pointer\';this.style.backgroundColor=\'#888\';" onMouseout="this.style.cursor=\'default\';this.style.backgroundColor=\'#666\';">
+				<td width="'.$mass[1][0].'" class="view"><div class="pad">'.$row['id'].'</div></td>
+				<td width="1px" style="background-color: #000;"></td>
+				<td width="'.$mass[2][0].'" class="view"><div class="pad">'.$main->GetNameByGUID(intval($row['sender'])).'</div></td>
+				<td width="1px" style="background-color: #000;"></td>';
 				if($cfg->get("progressbar"))
-					echo '
-				<td class="view" style="padding:0;margin:0;">'.$img.'</td>';
-				echo '
-				<td class="view">'.$main->GetStatus($all).'</td>
-				<td class="view">'.$main->GetPriority($all).'</td>
-				<td class="view"><div id="namelimit1" title="'.$title.'"><div style="position:absolute;">'.$title.'</div></div></td>
+					$text.= '
+				<td width="'.$mass[3][0].'" class="view" style="padding:0;margin:0;">'.$img.'</td>
+				<td width="1px" style="background-color: #000;"></td>';
+				$text.= '
+				<td width="'.$mass[4][0].'" class="view"><div class="pad">'.$main->GetStatus($all).'</div></td>
+				<td width="1px" style="background-color: #000;"></td>
+				<td width="'.$mass[5][0].'" class="view"><div class="pad">'.$main->GetPriority($all).'</div></td>
+				<td width="1px" style="background-color: #000;"></td>
+				<td class="view"><div class="pad"><div id="namelimit1" title="'.$title.'"><div style="position:absolute;">'.$title.'</div></div></div></td>
 				</tr>';
 
 				if($cfg->get("anim") && $pix > "0")
@@ -339,8 +262,9 @@ class body implements html
 				}
 				$m++;
 			}
-			echo '</table>';
-			echo '<script>'.$js.'</script>';
+			$text.= '</table>';
+			$text.= '<script>'.$js.'</script>';
+			$this->blocknot($text);
 		}
 		else
 		{
@@ -467,7 +391,16 @@ class body implements html
 		 </tr>
 		</table>';
 	}
-	
+	public function blocknot($text,$style='',$id='')
+	{
+		if($id)$id='id="'.$id.'"';
+		echo '
+		<table class="t0" '.$id.' cellpadding="0" cellspacing="0" align="center" style="'.$style.'">
+		 <tr>
+		  <td class="mini">'.$text.'</td>
+		 </tr>
+		</table>';
+	}
 	public function login()
 	{
 		echo '
@@ -487,10 +420,44 @@ class body implements html
 		global $user;
 		if(isset($user['site_notice']))
 			$this->block($user['site_notice']);
-		echo '
-		<div class="border" id="userpanel"><div id="hellotxt">Здравствуйте, <b>'.$user['username'].'</b>! (<a href="#" onClick="checklogout()">выход</a>)</div></div>
-		<div class="border" id="checklogout" style="display:none;"><div id="hellotxt">Точно выйти? <button onClick="window.location.href=\'index.php?logout=1\';">Да</button> | <button onClick="logoutcancel()">Отмена</button></div></div>
-		<div class="border"><div id="hellotxt"><a href="index.php?a=create">Создать</a> | <a href="index.php?a=list&sort=1&sortto=desc&last=1">Все</a> | <a href="index.php?a=list&type=1&sort=1&sortto=desc&last=1">Новые</a> | <a href="index.php?a=list&type=2&sort=1&sortto=desc&last=1">Мои</a> | <a href="'.$cfg->get("main").'">Сайт сервера</a></div></div>';
+		$txt1 = '
+		   <table height="100%" border="0" cellpadding="0" cellspacing="0" align="left">
+		    <tr>
+		     <td><div class="pad">Здравствуйте, <b>'.$user['username'].'</b>!</div></td>
+		     <td width="1px" style="background-color: #000;"></td>
+		     <td><div class="pad"><a href="#" onClick="checklogout()">Выход</a></div></td>
+		    </tr>
+		   </table>';
+	
+		$txt2 = '
+		   <table height="100%" border="0" cellpadding="0" cellspacing="0" align="left">
+		    <tr>
+		     <td><div class="pad">Точно выйти?</div></td>
+		     <td width="1px" style="background-color: #000;"></td>
+		     <td><div class="pad"><button onClick="window.location.href=\'index.php?logout=1\';">Да</button></div></td>
+		     <td width="1px" style="background-color: #000;"></td>
+		     <td><div class="pad"><button onClick="logoutcancel()">Отмена</button></div></td>
+		    </tr>
+		   </table>';
+
+		$txt3 = '
+		<table height="100%" border="0" cellpadding="0" cellspacing="0" align="left">
+		 <tr>
+		  <td><div class="pad"><a href="index.php?a=create">Создать</a></div></td>
+		  <td width="1px" style="background-color: #000;"></td>
+		  <td><div class="pad"><a href="index.php?a=list&sort=1&sortto=desc&last=1">Все</a></div></td>
+		  <td width="1px" style="background-color: #000;"></td>
+		  <td><div class="pad"><a href="index.php?a=list&type=1&sort=1&sortto=desc&last=1">Новые</a></div></td>
+		  <td width="1px" style="background-color: #000;"></td>
+		  <td><div class="pad"><a href="index.php?a=list&type=2&sort=1&sortto=desc&last=1">Мои</a></div></td>
+		  <td width="1px" style="background-color: #000;"></td>
+		  <td><div class="pad"><a href="'.$cfg->get("main").'">Сайт сервера</a></div></td>
+		 </tr>
+		</table>';
+		
+		$this->blocknot($txt1,"","userpanel");
+		$this->blocknot($txt2,"display:none;","checklogout");
+		$this->blocknot($txt3);
 	}
 	public function inc($content)
 	{
@@ -501,23 +468,43 @@ class body implements html
 	public function admin()
 	{
 		$main = new main;
-
 		if(isset($_GET['faststatus']) && 
 		isset($_GET['changeid']) && 
 		intval($_GET['changeid']) > 0)
 			$main->SetStatus($_GET['faststatus'],$_GET['changeid']);
 
 		if(isset($_GET['detail']))
+		{
 			$id = $_GET['detail'];
+			$all = $main->SelectMessage($id);
+		}
 		else
 			$id = "0";
-		echo '<div class="border"><div id="hellotxt">';
-		echo 'Новых: <a href="index.php?a=list&type=1&sort=1&sortto=desc&last=1">'.$main->GetSections("new").'</a> | <a href="index.php?a=admin">Управление БД</a> | <a href="index.php?a=admin&sort=1">Поиск и сортировка</a>';
+		$text = '
+		<table height="100%" border="0" cellpadding="0" cellspacing="0" align="left">
+		 <tr>';
+
+		 if($id > "0")
+			$text.= '
+			<td><div class="pad">Быстрый ответ: <select id="fastchange0" onchange="fastchangestatus('.$all['id'].')">'.$main->LoadStatus(1,$all).'</select></td>
+			<td width="1px" style="background-color: #000;"></td>
+			<td><div class="pad"><a href="#">Расширенный ответ</a></div></td>
+			<td width="1px" style="background-color: #000;"></td>';
+
+		  $text.= '
+		  <td><div class="pad">Новых: <a href="index.php?a=list&type=1&sort=1&sortto=desc&last=1">'.$main->GetSections("new").'</a></div></td>
+		  <td width="1px" style="background-color: #000;"></td>
+		  <td><div class="pad"><a href="index.php?a=admin">Управление БД</a></div></td>
+		  <td width="1px" style="background-color: #000;"></td>
+		  <td><div class="pad"><a href="index.php?a=admin&sort=1">Поиск и сортировка</a></div></td>';
 		
 		if(isset($_GET['a']) && $_GET['a'] == "list" && $main->GetSections("all") > "0")
-			echo ' | <a href="#" onClick="if(detail_view)window.location.href=\'index.php?a=admin&edit='.$id.'\';else{if(tr_select){tr_select=false;this.innerHTML=\'Изменить\';}else {tr_select=true;this.innerHTML=\'Отменить изменение\';}}">Изменить</a>';
+			$text.= '
+			<td width="1px" style="background-color: #000;"></td>
+			<td><div class="pad"><a href="#" onClick="if(detail_view)window.location.href=\'index.php?a=admin&edit='.$id.'\';else{if(tr_select){tr_select=false;this.innerHTML=\'Изменить\';}else {tr_select=true;this.innerHTML=\'Отменить изменение\';}}">Изменить</a></div></td>';
 		
-		echo '</div></div>';
+		$text.= '</tr></table>';
+		$this->blocknot($text);
 	}
 	public function CheckVersion()
 	{

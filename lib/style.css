@@ -34,19 +34,33 @@ border: 0;
 }
 button {
 border: 0;
+width: 60px;
 }
 .b1 {
+padding: 15px 0px 0px 0px;
 background-color: #666;
 border: 1px;
 border-style: solid;
 border-color: #888;
-width: 700px;
+width: 1000px;
 position: relative;
 top: 40px;
 }
+.t0 {
+width: 970px;
+margin: 0px 0px 15px 0px;
+}
+.t0 tr td.mini {
+background-color: #555;
+border: 1px;
+border-style: solid;
+border-color: #000;
+vertical-align: top;
+height: 32px;
+}
 #t1 {
 margin: 15px;
-width: 670px;
+width: 970px;
 }
 #t1 tr td.block {
 color: #FFF;
@@ -71,7 +85,7 @@ vertical-align: top;
 overflow: hidden;
 padding: 5px;
 margin: 0;
-width: 400px;
+width: 100%;
 height:160px;
 border: 0px;
 background-color: #999;
@@ -83,6 +97,9 @@ width: 100%;
 }
 .t2 tr td.block2 {
 padding: 0px 0px 0px 5px;
+}
+.t2 tr td.block3 {
+padding: 0px 5px 0px 0px;
 }
 .input {
 width: 140px;
@@ -100,7 +117,7 @@ padding: 0px 0px 0px 5px;
 color: #FFF;
 }
 .border {
-width: 668px;
+width: 968px;
 height: 30px;
 margin: 15px;
 color: #FFF;
@@ -112,13 +129,7 @@ padding: 5px;
 }
 .pad {
 padding: 0px 5px 0px 5px;
-}
-.statusborder {
-width: 655px;
-height: 5px;
-border: 1px;
-border-color: #006400;
-border-style: solid;
+color: #FFF;
 }
 #namelimit1 {
 position: relative;

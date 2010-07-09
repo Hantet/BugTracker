@@ -40,7 +40,7 @@ class config
 		"anim"			=> false,
 		"LinkAccount"	=> "http://localhost/admin/account.php?id=",
 		"LinkPlayer"	=> "http://localhost/admin/player.php?guid=",
-		"searchlimit"	=> 10,
+		"searchlimit"	=> 5,
 		"lang"			=> 8,
 		/*##################################################################################################
 		## Admin settings

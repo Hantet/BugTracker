@@ -55,7 +55,35 @@ class main implements create
 		$res = $sql->num_rows($sql->exe($cfg->get("realmd"),"SELECT 1 FROM `bt_message`".$order));
 		return ($res > "0") ? '<font color="red">'.$res.'</font>' : $res;
 	}
-	
+	public function GetSectionById($id)
+	{
+		$cfg = new config;
+		$sql = new sql;
+		$name = $sql->res($cfg->get("realmd"),"SELECT `name` FROM `bt_section` WHERE `id` = '".$id."'");
+		return $name;
+	}
+	public function GetSubType($id)
+	{
+		$cfg = new config;
+		$sql = new sql;
+		$result = $sql->res($cfg->get("realmd"),"SELECT `name` FROM `bt_subtype` WHERE `id` = '".$id."'");
+		if(!$result)
+			$result = '--';
+		return $result;
+	}
+	public function GetMap($id)
+	{
+		$cfg = new config;
+		$sql = new sql;
+		$result = $sql->res($cfg->get("realmd"),"SELECT `name` FROM `bt_map_id` WHERE `id` = '".$id."'");
+		if(!$result)
+			$result = '--';
+		return $result;
+	}
+	public function GetZone($id)
+	{
+
+	}
 	public function GetPercent($all,$one=false)
 	{
 		$cfg = new config;
@@ -133,7 +161,7 @@ class main implements create
 		$opt[0] = "";
 		$cur = 0;
 		$query = $sql->exe($cfg->get("realmd"),"SELECT * FROM `bt_zone_id` ORDER BY `map` ASC");
-		while($row = mysql_fetch_array($query))
+		while($row = $sql->fetch($query))
 		{
 			if(!isset($opt[$row['map']]))
 			{
@@ -146,7 +174,7 @@ class main implements create
 		$query = $sql->exe($cfg->get("realmd"),"SELECT `map` FROM `bt_zone_id` ORDER BY `map` ASC");
 		$script = '<script type="text/javascript">var map = new Array();';
 		$curmap = '';
-		while($tow = mysql_fetch_array($query))
+		while($tow = $sql->fetch($query))
 		{
 			if($tow['map'] != $curmap)
 			{
@@ -163,10 +191,12 @@ class main implements create
 		$cfg = new config;
 		$sql = new sql;
 		$query = $sql->exe($cfg->get("characters"),"SELECT `guid`,`name` FROM `characters` WHERE `account` = '".$acc."'");
+		$text = '';
 		while($row=mysql_fetch_array($query))
 		{
-			echo '<option value="'.$row['guid'].'">'.$row['name'].'</option>';
+			$text.= '<option value="'.$row['guid'].'">'.$row['name'].'</option>';
 		}
+		return $text;
 	}
 	
 	public function LoadStatus($id="0",$all="0")
@@ -203,11 +233,13 @@ class main implements create
 	{
 		$cfg = new config;
 		$sql = new sql;
+		$text = '';
 		$query = $sql->exe($cfg->get("realmd"),"SELECT `id`,`name` FROM `bt_map_id` ORDER BY `id` ASC");
 		while($row=mysql_fetch_array($query))
 		{
-			echo '<option value="'.$row['id'].'">'.$row['name'].'</option>';
+			$text.='<option value="'.$row['id'].'">'.$row['name'].'</option>';
 		}
+		return $text;
 	}
 	
 	public function login($login,$pass)
@@ -297,7 +329,7 @@ class main implements create
 	{
 		$cfg = new config;
 		$sql = new sql;
-		$query = $sql->exe($cfg->get("realmd"),"SELECT `id`,`name` FROM `bt_SubType` ORDER BY `id` ASC");
+		$query = $sql->exe($cfg->get("realmd"),"SELECT `id`,`name` FROM `bt_subtype` ORDER BY `id` ASC");
 		$txt="";
 		while($row=mysql_fetch_array($query))
 		{
@@ -312,17 +344,19 @@ class main implements create
 		$sql = new sql;
 		global $user;
 		$u=0;
-		echo '<div id="link">';
+		$text = '';
+		$text.= '<div id="link">';
 		while($row=$sql->fetch($opt))
 		{
 			$name = $this->GetNameByGUID(intval($row['guid']));
 			if($user['gmlevel'] >= $cfg->get("mingm"))
 				$name = '<a href="'.$cfg->get("LinkPlayer").intval($row['guid']).'">'.$name.'</a>';
-			echo '<div id="unic'.$u.'"><a href="javascript:viewdiv('.$u.')"><span style="position:relative;top:2px;" title="Просмотр"><img src="img/lens.png"></a></span> ['.$name.'] <a target="_blank" href="'.$row['link'].'">'.$row['name'].'</a><br></div>';
-			echo '<div id="save'.$u.'" style="display:none;">'.$row['method'].'^'.$row['guid'].'^'.$row['type'].'^'.$row['subtype'].'^'.$row['map'].'^'.$row['zone'].'^'.$row['name'].'^'.$row['link'].'</div>';
+			$text.= '<div id="unic'.$u.'"><a href="javascript:viewdiv('.$u.')"><span style="position:relative;top:2px;" title="Просмотр"><img src="img/lens.png"></a></span> ['.$name.'] <a target="_blank" href="'.$row['link'].'">'.$row['name'].'</a><br></div>';
+			$text.= '<div id="save'.$u.'" style="display:none;">'.$row['method'].'^'.$row['guid'].'^'.$row['type'].'^'.$row['subtype'].'^'.$row['map'].'^'.$row['zone'].'^'.$row['name'].'^'.$row['link'].'</div>';
 			$u++;
 		}
-		echo '</div>';
+		$text.= '</div>';
+		return $text;
 	}
 	
 	public function AccountRepass($acc,$code)

@@ -15,6 +15,10 @@ interface create
 	function GetNameByGUID($guid);
 	function GetAccountNameById($id);
 	function GetSections();
+	function GetSubType($id);
+	function GetMap($id);
+	function GetZone($id);
+	function GetSectionById($id);
 	function GetPercent($id,$one=false);
 	function GetPriority($id,$one=false);
 	function GetStatus($id,$one=false);
@@ -44,7 +48,6 @@ interface html
 	function install();
 	function send();
 	function viewall($int);
-	function viewdate($int);
 	function progress($int);
 	function detail($int);
 	function view();
@@ -53,6 +56,7 @@ interface html
 	function header();
 	function end();
 	function block($text);
+	function blocknot($text);
 	function login();
 	function success();
 	function inc($content);
