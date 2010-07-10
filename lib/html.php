@@ -109,7 +109,7 @@ class body implements html
 	public function progress($all)
 	{
 		$pcn = $all['percentage'];
-		$pix = str_replace("%","",$pcn)*9.55;
+		$pix = str_replace("%","",$pcn)*9.58;
 		$text = '
 		<table border="0" height="100%" cellpadding="0" cellspacing="0" align="left">
 		 <tr>
@@ -129,14 +129,17 @@ class body implements html
 		$this->blocknot($this->viewall($all));
 		$this->blocknot($this->progress($all));
 
+		$area3 = '';
+		if($all['text_3'])
+			$area3 = '<div class="pad">Пояснение:</div><textarea class="textarea" id="area3" READONLY>'.$all['text_3'].'</textarea>';
+
 		echo '<script>detail_view=true;</script>';
 		$text = '
 		<table height="100%" border="0" cellpadding="0" cellspacing="0" align="left">
 		 <tr>
-		  <td width="365px"><div class="pad">Сейчас так:</div>
+		  <td width="365px" valign="top"><div class="pad">Сейчас так:</div>
 		   <textarea class="textarea" id="area1" style="height:80px;" READONLY>'.$all['text_1'].'</textarea><div class="pad">А должно быть так:</div>
-		   <textarea class="textarea" id="area2" style="height:80px;" READONLY>'.$all['text_2'].'</textarea><div class="pad">Пояснение:</div>
-		   <textarea class="textarea" id="area3" READONLY>'.$all['text_3'].'</textarea>
+		   <textarea class="textarea" id="area2" style="height:80px;" READONLY>'.$all['text_2'].'</textarea>'.$area3.'
 		  </td>
 		  <td width="1px" style="background-color: #000;"></td>
 		  <td width="236px" valign="top">
@@ -204,23 +207,25 @@ class body implements html
 			
 			$mass = array(
 				1 => array("30px","#"),
-				2 => array("120px","Отправитель"),
-				3 => array("100px","Прогресс"),
-				4 => array("100px","Статус"),
-				5 => array("100px","Приоритет"));
+				2 => array("513px","Заголовок"),
+				3 => array("120px","Отправитель"),
+				4 => array("100px","Прогресс"),
+				5 => array("100px","Статус"),
+				6 => array("100px","Приоритет"));
 				
 			$text = '
 			<table height="100%" border="0" cellpadding="0" cellspacing="0" align="left">
 			 <tr>';
 			for($i=1;$i<count($mass)+1;$i++)
-				if(($i == 3 && $cfg->get("progressbar")) || $i != 3)
+				if(($i == 4 && $cfg->get("progressbar")) || $i != 4)
 				{
 					$text.= '<td style="width:'.$mass[$i][0].';background-color:#666;" onClick="window.location.href=\''.$href.'&sort='.$i.'&sortto='.$sortto.'&last='.$sort.'\';" onMouseover="this.style.cursor=\'pointer\';this.style.backgroundColor=\'#777\';" onMouseout="this.style.cursor=\'default\';this.style.backgroundColor=\'#666\';"><div class="pad"><b>'.$mass[$i][1].'</b></div></td>';
-					$text.= '<td width="1px" style="background-color: #000;"></td>';
+					if($i != count($mass))
+						$text.= '<td width="1px" style="background-color: #000;"></td>';
 				}
 			$text.= '
-			  <td><div class="pad"><b>Заголовок</b></div></td>
-			 </tr></table>';
+			 </tr>
+			</table>';
 			$this->blocknot($text);
 			$text = '<table width="100%" height="19px" border="0" cellpadding="0" cellspacing="0" align="left">';
 			$psort = '';
@@ -261,7 +266,7 @@ class body implements html
 
 				$title = $all['title'];
 				$pcn = $main->GetPercent($all);
-				$pix = str_replace("%","",$pcn)*1.25;
+				$pix = str_replace("%","",$pcn);
 				$stream = 'stream'.$row['id'];
 				$width = ($cfg->get("anim") == true) ? 0 : $pix;
 				$img = '<div id="stream'.$m.'" style="height:19px;width:'.$width.'px;background-color:#006400;"></div>';
@@ -270,18 +275,18 @@ class body implements html
 				<tr style="background-color: #666;" onClick="if(tr_select)window.location.href=\'index.php?a=admin&edit='.$row['id'].'\';else window.location.href=\'index.php?a=list&detail='.$row['id'].'\';" onMouseover="this.style.cursor=\'pointer\';this.style.backgroundColor=\'#888\';" onMouseout="this.style.cursor=\'default\';this.style.backgroundColor=\'#666\';">
 				 <td width="'.$mass[1][0].'" class="view"><div class="pad">'.$row['id'].'</div></td>
 				 <td width="1px" style="background-color: #000;"></td>
-				 <td width="'.$mass[2][0].'" class="view"><div class="pad">'.$main->GetNameByGUID(intval($row['sender'])).'</div></td>
+				 <td width="'.$mass[2][0].'" class="view"><div class="pad"><div id="namelimit1" title="'.$title.'"><div style="position:absolute;">'.$title.'</div></div></div></td>
+				 <td width="1px" style="background-color: #000;"></td>
+				 <td width="'.$mass[3][0].'" class="view"><div class="pad">'.$main->GetNameByGUID(intval($row['sender'])).'</div></td>
 				 <td width="1px" style="background-color: #000;"></td>';
 				if($cfg->get("progressbar"))
 					$text.= '
-				 <td width="'.$mass[3][0].'" class="view" style="padding:0;margin:0;">'.$img.'</td>
+				 <td width="'.$mass[4][0].'" class="view" style="padding:0;margin:0;">'.$img.'</td>
 				 <td width="1px" style="background-color: #000;"></td>';
 				$text.= '
-				 <td width="'.$mass[4][0].'" class="view"><div class="pad">'.$main->GetStatus($all).'</div></td>
+				 <td width="'.$mass[5][0].'" class="view"><div class="pad">'.$main->GetStatus($all).'</div></td>
 				 <td width="1px" style="background-color: #000;"></td>
-				 <td width="'.$mass[5][0].'" class="view"><div class="pad">'.$main->GetPriority($all).'</div></td>
-				 <td width="1px" style="background-color: #000;"></td>
-				 <td class="view"><div class="pad"><div id="namelimit1" title="'.$title.'"><div style="position:absolute;">'.$title.'</div></div></div></td>
+				 <td width="'.$mass[6][0].'" class="view"><div class="pad">'.$main->GetPriority($all).'</div></td>
 				</tr>';
 
 				if($cfg->get("anim") && $pix > "0")
@@ -333,11 +338,11 @@ class body implements html
 				$opt = $main->SelectOptions($id);
 				$userid = $all['account'];
 				$username = $main->GetAccountNameById($userid);
-				if($cfg->get("LinkAccount"))$username = '<a href="'.$cfg->get("LinkAccount").$userid.'">'.$username.'</a>';
+				if($cfg->get("LinkAccount"))$username = '<a href="'.$cfg->get("LinkAccount").$userid.'" target="_blank">'.$username.'</a>';
 
 				$charguid = $all['sender'];
 				$charname = $main->GetNameByGUID($charguid);
-				if($cfg->get("LinkPlayer"))$charname = '<a href="'.$cfg->get("LinkPlayer").$charguid.'">'.$charname.'</a>';
+				if($cfg->get("LinkPlayer"))$charname = '<a href="'.$cfg->get("LinkPlayer").$charguid.'" target="_blank">'.$charname.'</a>';
 
 				$text = '
 				<table border="0" align="center" width="324" cellpadding="0" cellspacing="0">
