@@ -1,0 +1,1 @@
+ALTER TABLE `bt_comment` ADD COLUMN `admin_reply` int(1) NOT NULL DEFAULT 0 AFTER `date`;

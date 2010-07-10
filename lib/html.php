@@ -128,6 +128,7 @@ class body implements html
 		$opt = $main->SelectOptions($int);
 		$this->blocknot($this->viewall($all));
 		$this->blocknot($this->progress($all));
+		$chars = $main->LoadChar($user['id']);
 		if(isset($_GET['delcomm']) && $user['gmlevel'] >= $cfg->get("mingm"))
 			if(!$main->DeleteComment($_GET['delcomm']))
 				echo '<script>alert("Ошибка! Комментарий не удалён!");</script>';
@@ -175,13 +176,20 @@ class body implements html
 		  <td width="1px" style="background-color: #000;"></td>
 		  <td valign="top" width="365px">
 		   <div class="pad">Ответ администрации:</div>
-		   <textarea class="textarea" style="height:80px;" READONLY></textarea>
+		   <div class="textarea2" id="textarea3" style="display:block;height:160px;">'.$main->GetAdminReply($all['id']).'</div>
+		   <div id="adminlayer" style="display:none;">
+		    <textarea class="textarea" id="admin_reply" style="height:119px;"></textarea>
+			<div align="right"><select class="input" id="comm_admin"><option DISABLED SELECTED value="0">Отправитель</option>'.$chars.'</select></div>
+			<div align="right"><div class="butt" onClick="addcomment('.$all['id'].',1)">Отправить</div></div>
+		   </div>
 		   <div class="pad">Комментарии пользователей:</div>
 		   <div class="textarea2" id="textarea2">'.$main->LoadComment($all['id']).'</div>
-		    <div class="pad">Добавить комментарий:</div>
-		   <textarea class="textarea" style="height:80px;" id="comm_text"></textarea>
-		   <div align="right"><select class="input" id="comm_player"><option DISABLED SELECTED value="0">Отправитель</option>'.$main->LoadChar($user['id']).'</select></div>	  
-		   <div align="right"><div class="butt" onClick="addcomment('.$all['id'].')">Отправить</div>	   
+		   <div class="pad"><a href="#" onClick=\'showhide0("commentlayer")\'>Добавить комментарий</a></div>
+		   <div id="commentlayer" style="display:none;">
+		    <textarea class="textarea" style="height:80px;" id="comm_text"></textarea>
+		    <div align="right"><select class="input" id="comm_player"><option DISABLED SELECTED value="0">Отправитель</option>'.$chars.'</select></div>	  
+		    <div align="right"><div class="butt" onClick="addcomment('.$all['id'].',0)">Отправить</div></div>
+		   </div>
 		  </td>
 		 </tr>
 		</table><span id="userid" style="display:none;">'.$user['id'].'</span>';
@@ -533,7 +541,7 @@ class body implements html
 			$text.= '
 			<td><div class="pad">Быстрый ответ: <select id="fastchange0" onchange="fastchangestatus('.$all['id'].')">'.$main->LoadStatus(1,$all).'</select></td>
 			<td width="1px" style="background-color: #000;"></td>
-			<td><div class="pad"><a href="#">Расширенный ответ</a></div></td>
+			<td><div class="pad"><a href="#" onClick=\'showhide0("adminlayer");showhide0("textarea3");document.getElementById("admin_reply").focus();\'>Расширенный ответ</a></div></td>
 			<td width="1px" style="background-color: #000;"></td>';
 
 		  $text.= '

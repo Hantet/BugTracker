@@ -15,7 +15,12 @@ if($_SERVER['HTTP_X_REQUESTED_WITH'] == "XMLHttpRequest" &&
 	$player = intval($_POST['player']);
 	$text = htmlspecialchars($_POST['text'], ENT_QUOTES);
 	$date = $main->GetDate("Y-m-d H:i:s");
-	$sql->exe($cfg->get("realmd"),"INSERT INTO `bt_comment` (`entry`,`account`,`player`,`text`,`date`) VALUES ('".$entry."','".$account."','".$player."','".$text."','".$date."')");
+	
+	$query = "INSERT INTO `bt_comment` (`entry`,`account`,`player`,`text`,`date`) VALUES ('".$entry."','".$account."','".$player."','".$text."','".$date."')";	
+	if(isset($_POST['admin']) && $_POST['admin'] == "1")
+		$query = "INSERT INTO `bt_comment` (`entry`,`account`,`player`,`text`,`date`,`admin_reply`) VALUES ('".$entry."','".$account."','".$player."','".$text."','".$date."','1')";
+
+	$sql->exe($cfg->get("realmd"),$query);
 	echo $date;
 }
 ?>

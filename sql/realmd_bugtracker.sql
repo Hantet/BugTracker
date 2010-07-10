@@ -7,6 +7,7 @@ CREATE TABLE `bt_comment` (
 `player` int(11) NOT NULL,
 `text` varchar(255) NOT NULL,
 `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+`admin_reply` int(1) NOT NULL DEFAULT 0,
 PRIMARY KEY (`id`));
 
 DROP TABLE IF EXISTS `bt_map_id`;

@@ -25,7 +25,8 @@ interface create
 	function GetDate($format);
 	function GetPreviousElement($type,$change);
 	function SetStatus($statusid=-1,$id=-1);
-	
+	function GetAdminReply($id);
+
 	function LoadZones();
 	function LoadChar($acc);
 	function LoadStatus($id="0");

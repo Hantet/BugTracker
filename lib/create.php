@@ -151,6 +151,28 @@ class main implements create
 		return false;
 	}
 	
+	public function GetAdminReply($id)
+	{
+		global $user;
+		$cfg = new config;
+		$sql = new sql;
+		$text = '';
+		$trash = '';
+		$query = $sql->exe($cfg->get("realmd"),"SELECT * FROM `bt_comment` WHERE `entry` = '".$id."' AND `admin_reply` = '1' ORDER BY `id` DESC");
+		while($row=$sql->fetch($query))
+		{
+			if($user['gmlevel'] >= $cfg->get("mingm"))
+			{
+				$trash = '<img src="img/trash.png" onClick="DeleteComment('.$row['id'].','.$_GET['detail'].')" onMouseOver="this.src=\'img/ontrash.png\'" onMouseOut="this.src=\'img/trash.png\'" style="cursor:pointer;" title="Удалить">';
+				$name = '<a href="'.$cfg->get("LinkPlayer").$row['player'].'" target="_blank">'.$this->GetNameByGUID($row['player']).'</a>';
+			}
+			else
+				$name = $this->GetNameByGUID($row['player']);
+			$text.= '<div class="pad2">'.$trash.$row['date'].' ['.$name.']:<div class="pad2">'.$row['text'].'</div></div><hr>';
+		}
+		return $text;
+	}
+	
 	public function SetStatus($statusid=-1,$id=-1)
 	{
 		$cfg = new config;
@@ -371,11 +393,18 @@ class main implements create
 		$cfg = new config;
 		$sql = new sql;
 		$text = '';
-		$query = $sql->exe($cfg->get("realmd"),"SELECT * FROM `bt_comment` WHERE `entry` = '".$id."' ORDER BY `id` DESC");
+		$trash = '';
+		$query = $sql->exe($cfg->get("realmd"),"SELECT * FROM `bt_comment` WHERE `entry` = '".$id."' AND `admin_reply` = '0' ORDER BY `id` DESC");
 		while($row=$sql->fetch($query))
 		{
-			$name = ($user['gmlevel'] >= $cfg->get("mingm")) ? '<a href="'.$cfg->get("LinkPlayer").$row['player'].'" target="_blank">'.$this->GetNameByGUID($row['player']).'</a>' : $this->GetNameByGUID($row['player']);
-			$text.= '<div class="pad2"><img src="img/trash.png" onClick="DeleteComment('.$row['id'].','.$_GET['detail'].')" onMouseOver="this.src=\'img/ontrash.png\'" onMouseOut="this.src=\'img/trash.png\'" style="cursor:pointer;" title="Удалить"> '.$row['date'].' ['.$name.']:<div class="pad2">'.$row['text'].'</div></div><hr>';
+			if($user['gmlevel'] >= $cfg->get("mingm"))
+			{
+				$trash = '<img src="img/trash.png" onClick="DeleteComment('.$row['id'].','.$_GET['detail'].')" onMouseOver="this.src=\'img/ontrash.png\'" onMouseOut="this.src=\'img/trash.png\'" style="cursor:pointer;" title="Удалить">';
+				$name = '<a href="'.$cfg->get("LinkPlayer").$row['player'].'" target="_blank">'.$this->GetNameByGUID($row['player']).'</a>';
+			}
+			else
+				$name = $this->GetNameByGUID($row['player']);
+			$text.= '<div class="pad2">'.$trash.$row['date'].' ['.$name.']:<div class="pad2">'.$row['text'].'</div></div><hr>';
 		}
 		return $text;
 	}
