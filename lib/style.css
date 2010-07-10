@@ -3,12 +3,12 @@ padding: 0;
 margin: 0;
 background-color: #000;
 }
-hr.ruler {
+hr {
 height: 1px;
 margin: 0;
 padding: 0;
 border-top: 0;
-border-bottom: 1px dashed #000;
+border-bottom: 1px dotted #000;
 }
 a {
 color: #FFF;
@@ -99,6 +99,18 @@ border: 0px;
 background-color: #999;
 color: #000;
 }
+.textarea2 {
+cursor: default;
+overflow: auto;
+padding: 0px;
+margin: 0;
+border: 0px;
+background-color: #999;
+color: #000;
+height: 180px;
+width: 100%;
+font-size: 14px;
+}
 .t2 {
 color: #FFF;
 width: 100%;
@@ -139,6 +151,9 @@ padding: 5px;
 .pad {
 padding: 0px 5px 0px 5px;
 color: #FFF;
+}
+.pad2 {
+padding: 5px;
 }
 #namelimit1 {
 position: relative;

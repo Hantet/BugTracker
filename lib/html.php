@@ -138,31 +138,31 @@ class body implements html
 		<table height="100%" border="0" cellpadding="0" cellspacing="0" align="left">
 		 <tr>
 		  <td width="365px" valign="top"><div class="pad">Сейчас так:</div>
-		   <textarea class="textarea" id="area1" style="height:80px;" READONLY>'.$all['text_1'].'</textarea><div class="pad">А должно быть так:</div>
-		   <textarea class="textarea" id="area2" style="height:80px;" READONLY>'.$all['text_2'].'</textarea>'.$area3.'
+		   <textarea class="textarea" style="height:80px;" READONLY>'.$all['text_1'].'</textarea><div class="pad">А должно быть так:</div>
+		   <textarea class="textarea" style="height:80px;" READONLY>'.$all['text_2'].'</textarea>'.$area3.'
 		  </td>
 		  <td width="1px" style="background-color: #000;"></td>
 		  <td width="236px" valign="top">
 		   <table class="t2" border="0" cellpadding="0" cellspacing="0" align="center">
 		    <tr>
 		     <td class="block2">Персонаж:</td>
-		     <td class="block3" align="right" id="player">'.$main->GetNameByGUID($all['sender']).'</td>
+		     <td class="block3" align="right">'.$main->GetNameByGUID($all['sender']).'</td>
 		    </tr>
 		    <tr>
 		     <td class="block2">Тип:</td>
-		     <td class="block3" align="right" id="type">'.$main->GetSectionById($all['type']).'</td>
+		     <td class="block3" align="right">'.$main->GetSectionById($all['type']).'</td>
 		    </tr>
 			<tr>
 			 <td class="block2">Подтип:</td>
-			 <td class="block3" align="right" id="subtype">'.$main->GetSubType($all['subtype']).'</td>
+			 <td class="block3" align="right">'.$main->GetSubType($all['subtype']).'</td>
 			</tr>
 		    <tr>
 		     <td class="block2">Местность:</td>
-		     <td class="block3" align="right" id="map">'.$main->GetMap($all['map']).'</td>
+		     <td class="block3" align="right">'.$main->GetMap($all['map']).'</td>
 		    </tr>
 		    <tr>
 		     <td class="block2" valign="top">Зона: </td>
-		     <td class="block3" align="right" id="zone">'.$main->GetZone($all['zone']).'</td>
+		     <td class="block3" align="right">'.$main->GetZone($all['zone']).'</td>
 		    </tr>
 			<tr style="height:10px;"><td></td><td></td></tr>
 			<tr style="height:1px;background-color: #000;"><td></td><td></td></tr>
@@ -172,10 +172,17 @@ class body implements html
 		  </td>
 		  <td width="1px" style="background-color: #000;"></td>
 		  <td valign="top" width="365px">
-		   <div class="pad">Комментарии:</div>
+		   <div class="pad">Ответ администрации:</div>
+		   <textarea class="textarea" style="height:80px;" READONLY></textarea>
+		   <div class="pad">Комментарии пользователей:</div>
+		   <div class="textarea2" id="textarea2"></div>
+		    <div class="pad">Добавить комментарий:</div>
+		   <textarea class="textarea" style="height:80px;" id="comm_text"></textarea>
+		   <div align="right"><select class="input" id="comm_player"><option DISABLED SELECTED value="0">Отправитель</option>'.$main->LoadChar($user['id']).'</select></div>	  
+		   <div align="right"><div class="butt" onClick="addcomment('.$all['id'].')">Отправить</div>	   
 		  </td>
 		 </tr>
-		</table>';
+		</table><span id="userid" style="display:none;">'.$user['id'].'</span>';
 		$this->blocknot($text);
 	}
 	public function view()

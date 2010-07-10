@@ -50,9 +50,9 @@ class config
 		##		installquery:	Count of query for install. Do not change!
 		##################################################################################################*/
 		"CheckVersion"	=> false,
-		"version"		=> 27,
+		"version"		=> 28,
 		"checkdiff"		=> 2,
-		"installquery"	=> 213,
+		"installquery"	=> 214,
 		/*##################################################################################################
 		## Outer resources
 		##		Database:		Link to the wow database site. Default: http://ru.wowhead.com/.
