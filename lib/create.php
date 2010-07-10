@@ -365,6 +365,32 @@ class main implements create
 		return $text;
 	}
 	
+	public function LoadComment($id)
+	{
+		global $user;
+		$cfg = new config;
+		$sql = new sql;
+		$text = '';
+		$query = $sql->exe($cfg->get("realmd"),"SELECT * FROM `bt_comment` WHERE `entry` = '".$id."' ORDER BY `id` DESC");
+		while($row=$sql->fetch($query))
+		{
+			$name = ($user['gmlevel'] >= $cfg->get("mingm")) ? '<a href="'.$cfg->get("LinkPlayer").$row['player'].'" target="_blank">'.$this->GetNameByGUID($row['player']).'</a>' : $this->GetNameByGUID($row['player']);
+			$text.= '<div class="pad2"><img src="img/trash.png" onClick="DeleteComment('.$row['id'].','.$_GET['detail'].')" onMouseOver="this.src=\'img/ontrash.png\'" onMouseOut="this.src=\'img/trash.png\'" style="cursor:pointer;" title="Удалить"> '.$row['date'].' ['.$name.']:<div class="pad2">'.$row['text'].'</div></div><hr>';
+		}
+		return $text;
+	}
+	
+	public function DeleteComment($id)
+	{
+		global $user;
+		$cfg = new config;
+		$sql = new sql;
+		if(isset($id) && intval($id) > 0)
+			if($sql->exe($cfg->get("realmd"),"DELETE FROM `bt_comment` WHERE `id` = '".$id."'"))
+				return true;
+		return false;
+	}
+	
 	public function AccountRepass($acc,$code)
 	{
 		$cfg = new config;

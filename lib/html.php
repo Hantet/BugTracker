@@ -128,7 +128,9 @@ class body implements html
 		$opt = $main->SelectOptions($int);
 		$this->blocknot($this->viewall($all));
 		$this->blocknot($this->progress($all));
-
+		if(isset($_GET['delcomm']) && $user['gmlevel'] >= $cfg->get("mingm"))
+			if(!$main->DeleteComment($_GET['delcomm']))
+				echo '<script>alert("Ошибка! Комментарий не удалён!");</script>';
 		$area3 = '';
 		if($all['text_3'])
 			$area3 = '<div class="pad">Пояснение:</div><textarea class="textarea" id="area3" READONLY>'.$all['text_3'].'</textarea>';
@@ -175,7 +177,7 @@ class body implements html
 		   <div class="pad">Ответ администрации:</div>
 		   <textarea class="textarea" style="height:80px;" READONLY></textarea>
 		   <div class="pad">Комментарии пользователей:</div>
-		   <div class="textarea2" id="textarea2"></div>
+		   <div class="textarea2" id="textarea2">'.$main->LoadComment($all['id']).'</div>
 		    <div class="pad">Добавить комментарий:</div>
 		   <textarea class="textarea" style="height:80px;" id="comm_text"></textarea>
 		   <div align="right"><select class="input" id="comm_player"><option DISABLED SELECTED value="0">Отправитель</option>'.$main->LoadChar($user['id']).'</select></div>	  

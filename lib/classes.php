@@ -35,7 +35,9 @@ interface create
 	function LoadPriority($id = "0");
 	function LoadView($id,$type);
 	function LoadSubType();
-	
+	function LoadComment($id);
+	function DeleteComment($id);
+
 	function login($login,$pass);
 	function cookies($login,$pass);
 	function AccountRepass($acc,$code);
