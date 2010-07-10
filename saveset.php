@@ -3,7 +3,9 @@ if($_SERVER['HTTP_X_REQUESTED_WITH'] == "XMLHttpRequest" && isset($_POST['lis'])
 {
 	require_once("config.php");
 	require_once("lib/classes.php");
-
+	$sql = new sql;
+	$cfg = new config;
+	
 	if($_POST['del'] == "0")
 	{
 		$listid		= $_POST['lis'];
@@ -18,19 +20,23 @@ if($_SERVER['HTTP_X_REQUESTED_WITH'] == "XMLHttpRequest" && isset($_POST['lis'])
 		$status		= htmlspecialchars(addslashes($status), ENT_QUOTES);
 		$progress	= htmlspecialchars(addslashes($progress), ENT_QUOTES);
 
-		$query = "UPDATE `bt_message` SET `title` = '".$title."', `status` = '".$status."', `percentage` = '".$progress."', `priority` = '".$priority."' WHERE `id` = '".$listid."'";
+		if($sql->exe($cfg->get("realmd"),"UPDATE `bt_message` SET `title` = '".$title."', `status` = '".$status."', `percentage` = '".$progress."', `priority` = '".$priority."' WHERE `id` = '".$listid."'"))
+			echo 1;
+		else
+			echo 'Ошибка! Таблица `bt_message` недоступна или повреждена!';
 	}
 	else
 	{
-		$query = "DELETE FROM `bt_message` WHERE `id` = '".$_POST['lis']."'";
+		if($sql->exe($cfg->get("realmd"),"DELETE FROM `bt_message` WHERE `id` = '".$_POST['lis']."'"))
+			$m1 = 1;
+		if($sql->exe($cfg->get("realmd"),"DELETE FROM `bt_options` WHERE `id` = '".$_POST['lis']."'"))
+			$m2 = 1;
+		if($sql->exe($cfg->get("realmd"),"DELETE FROM `bt_comment` WHERE `entry` = '".$_POST['lis']."'"))
+			$m3 = 1;
+		if($m1 == 1 && $m2 == 1 && $m3 == 1)
+			echo 1;
+		else
+			echo 'Ошибка! Таблица `bt_message` и/или `bt_options` недоступна или повреждена!';
 	}
-
-	$sql = new sql;
-	$cfg = new config;
-
-	if($sql->exe($cfg->get("realmd"),$query))
-		echo 1;
-	else
-		echo 'Ошибка! Таблица `bt_message` недоступна или повреждена!';
 }
 ?>

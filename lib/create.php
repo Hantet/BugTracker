@@ -365,7 +365,7 @@ class main implements create
 		return $txt;
 	}
 	
-	public function LoadView($opt,$type)
+	public function LoadView($opt)
 	{
 		$cfg = new config;
 		$sql = new sql;
@@ -373,13 +373,34 @@ class main implements create
 		$text = '';
 		while($row=$sql->fetch($opt))
 		{
-			switch($type)
+			$exp2 = @explode($cfg->get("wd_quest"),$row['link']);
+			$exp3 = @explode($cfg->get("wd_item"),$row['link']);
+			$exp4 = @explode($cfg->get("wd_npc"),$row['link']);
+			$exp5 = @explode($cfg->get("wd_object"),$row['link']);
+
+			if(isset($exp2[1]))
 			{
-				case 2: $tbl = $cfg->get("lang") == 8 ? 'locales_quest' : 'quest_template';$field = 'Title_loc8';$tblt = $cfg->get("wd_quest");break;
-				case 3: $tbl = $cfg->get("lang") == 8 ? 'locales_item' : 'item_template';$field = 'name_loc8';$tblt = $cfg->get("wd_item");break;
-				case 4:	$tbl = $cfg->get("lang") == 8 ? 'locales_creature' : 'creature_template';$field = 'name_loc8';$tblt = $cfg->get("wd_npc");break;
-				case 5: $tbl = $cfg->get("lang") == 8 ? 'locales_gameobject' : 'gameobject_template';$field = 'name_loc8';$tblt = $cfg->get("wd_object");break;
+				if($cfg->get("lang") == 8){$tbl = 'locales_quest';$field = 'Title_loc8';}else{$tbl = 'quest_template';$field = 'Title';}
+				$tblt = $cfg->get("wd_quest");
 			}
+			else if(isset($exp3[1]))
+			{
+				if($cfg->get("lang") == 8){$tbl = 'locales_item';$field = 'name_loc8';}else{$tbl = 'item_template';$field = 'name';}
+				$tblt = $cfg->get("wd_item");
+			}
+			else if(isset($exp4[1]))
+			{
+				if($cfg->get("lang") == 8){$tbl = 'locales_creature';$field = 'name_loc8';}else{$tbl = 'creature_template';$field = 'name';}
+				$tblt = $cfg->get("wd_npc");
+			}
+			else if(isset($exp5[1]))
+			{
+				if($cfg->get("lang") == 8){$tbl = 'locales_gameobject';$field = 'name_loc8';}else{$tbl = 'gameobject_template';$field = 'name';}
+				$tblt = $cfg->get("wd_object");
+			}
+			else
+				return;
+
 			$id = explode($tblt,$row['link']);
 			$name = $sql->res($cfg->get("mangos"),"SELECT `".$field."` FROM `".$tbl."` WHERE `entry` = '".$id[1]."'");
 			$text.= '<a href="'.$row['link'].'" target="_blank">'.$name.'</a><br>';

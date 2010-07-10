@@ -45,16 +45,20 @@ class body implements html
 			 <td align="right"><input id="title" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text"></td>
 			</tr>
 		    <tr>
-		     <td class="block2">Название:</td>
-		     <td align="right"><input id="name" onKeyUp="searchfor(this.value)" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text" READONLY></td>
-		    </tr>
-		    <tr>
 		     <td class="block2"></td>
 		     <td align="right"><div class="butt" onClick="tolink()">Отправить</div></td>
 		    </tr>
 			<tr style="height:10px;"><td></td><td></td></tr>
 			<tr style="height:1px;background-color: #000;"><td></td><td></td></tr>
 			<tr style="height:5px;"><td></td><td></td></tr>
+		    <tr>
+		     <td class="block2">Тип ссылки:</td>
+		     <td align="right"><select class="input" id="typelink"><option DISABLED SELECTED value="0"></option>'.$main->LoadSection().'</select></td>
+		    </tr>
+		    <tr>
+		     <td class="block2">Поиск:</td>
+		     <td align="right"><input id="name" onKeyUp="searchfor(this.value)" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text" READONLY></td>
+		    </tr>
 		   </table>
 		   <div class="pad">Ссылки:<br><br>
 		    <div id="links"></div>
@@ -171,7 +175,7 @@ class body implements html
 			<tr style="height:1px;background-color: #000;"><td></td><td></td></tr>
 			<tr style="height:5px;"><td></td><td></td></tr>
 		   </table>
-		   <div class="pad">Ссылки:<div align="right">'.$main->LoadView($opt,$all['type']).'</div></div>
+		   <div class="pad">Ссылки:<div align="right">'.$main->LoadView($opt).'</div></div>
 		  </td>
 		  <td width="1px" style="background-color: #000;"></td>
 		  <td valign="top" width="365px">
@@ -292,7 +296,7 @@ class body implements html
 				<tr style="background-color: #666;" onClick="if(tr_select)window.location.href=\'index.php?a=admin&edit='.$row['id'].'\';else window.location.href=\'index.php?a=list&detail='.$row['id'].'\';" onMouseover="this.style.cursor=\'pointer\';this.style.backgroundColor=\'#888\';" onMouseout="this.style.cursor=\'default\';this.style.backgroundColor=\'#666\';">
 				 <td width="'.$mass[1][0].'" class="view"><div class="pad">'.$row['id'].'</div></td>
 				 <td width="1px" style="background-color: #000;"></td>
-				 <td width="'.$mass[2][0].'" class="view"><div class="pad"><div id="namelimit1" title="'.$title.'"><div style="position:absolute;">'.$title.'</div></div></div></td>
+				 <td width="'.$mass[2][0].'" class="view"><div class="pad">'.$title.'</div></td>
 				 <td width="1px" style="background-color: #000;"></td>
 				 <td width="'.$mass[3][0].'" class="view"><div class="pad">'.$main->GetNameByGUID(intval($row['sender'])).'</div></td>
 				 <td width="1px" style="background-color: #000;"></td>';

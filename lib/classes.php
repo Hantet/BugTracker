@@ -34,7 +34,7 @@ interface create
 	function LoadMap();
 	function LoadList($status="all");
 	function LoadPriority($id = "0");
-	function LoadView($id,$type);
+	function LoadView($id);
 	function LoadSubType();
 	function LoadComment($id);
 	function DeleteComment($id);
