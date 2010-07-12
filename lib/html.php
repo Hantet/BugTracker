@@ -57,10 +57,10 @@ class body implements html
 		    </tr>
 		    <tr>
 		     <td class="block2">Поиск:</td>
-		     <td align="right"><input id="name" onKeyUp="searchfor(this.value)" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text" READONLY></td>
+		     <td align="right"><input id="name" onKeyUp="searchfor(this.value)" onFocus="this.style.backgroundColor=\'#CCC\'" onBlur="this.style.backgroundColor=\'#FFF\'" class="input" type="text"></td>
 		    </tr>
 		   </table>
-		   <div class="pad">Ссылки:<br><br>
+		   <div class="pad">
 		    <div id="links"></div>
 		   </div>
 		  </td>
