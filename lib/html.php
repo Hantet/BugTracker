@@ -599,7 +599,7 @@ class body implements html
 				if($current != $version[0])
 				{
 					$text = '
-					<font color="red">Внимание! Версия Баг-трекера устарела!</font> <a href="#" onClick="showhide0()">Подробнее...</a>
+					<font color="red">Внимание! Версия Баг-трекера устарела!</font> <a href="#" onClick=\'showhide0("hide0")\'>Подробнее...</a>
 					<div id="hide0" style="display:none;">
 					<br>
 					Текущая версия: '.$current.'.<br>
