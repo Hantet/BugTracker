@@ -73,7 +73,7 @@ class body implements html
 		    <input name="myfile" type="file" style="width:220px;"><img src="img/add.png" title="Загрузить" style="position:relative;top:3px;cursor:pointer;" onClick="document.form_iframe.submit();" onMouseOver="this.src=\'img/onadd.png\'" onMouseOut="this.src=\'img/add.png\'">
 		   </form>
 		   <div id="screen_links" style="display:none;"></div>
-		   <div id="result"></div>
+		   <br><div id="result"></div>
 		   <iframe id="upload_target" name="upload_target" src="#" style="width:0;height:0;border:0px;"></iframe>
 		  </td>
 		  <td width="1px" style="background-color: #000;"></td>

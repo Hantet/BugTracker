@@ -296,7 +296,7 @@ class main implements create
 		$query = $sql->exe($cfg->get("realmd"),"SELECT `address`,`mini` FROM `bt_screen` WHERE `entry` = '".$id."'");
 		while($row=$sql->fetch($query))
 		{
-			$text.= '<div align="center"><a href="screen/'.$row['address'].'" target="_blank"><img src="screen/'.$row['mini'].'"></a></div>';
+			$text.= '<div align="center"><a href="screen/'.$row['address'].'" target="_blank"><img src="screen/'.$row['mini'].'"></a></div><br>';
 		}
 		return $text;
 	}
