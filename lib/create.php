@@ -173,6 +173,134 @@ class main implements create
 		return $text;
 	}
 	
+	public function GetRandomLit($num)
+	{
+		switch($num)
+		{
+			case "1":$rand_value = "a";break;
+			case "2":$rand_value = "b";break;
+			case "3":$rand_value = "c";break;
+			case "4":$rand_value = "d";break;
+			case "5":$rand_value = "e";break;
+			case "6":$rand_value = "f";break;
+			case "7":$rand_value = "g";break;
+			case "8":$rand_value = "h";break;
+			case "9":$rand_value = "i";break;
+			case "10":$rand_value = "j";break;
+			case "11":$rand_value = "k";break;
+			case "12":$rand_value = "l";break;
+			case "13":$rand_value = "m";break;
+			case "14":$rand_value = "n";break;
+			case "15":$rand_value = "o";break;
+			case "16":$rand_value = "p";break;
+			case "17":$rand_value = "q";break;
+			case "18":$rand_value = "r";break;
+			case "19":$rand_value = "s";break;
+			case "20":$rand_value = "t";break;
+			case "21":$rand_value = "u";break;
+			case "22":$rand_value = "v";break;
+			case "23":$rand_value = "w";break;
+			case "24":$rand_value = "x";break;
+			case "25":$rand_value = "y";break;
+			case "26":$rand_value = "z";break;
+			case "27":$rand_value = "0";break;
+			case "28":$rand_value = "1";break;
+			case "29":$rand_value = "2";break;
+			case "30":$rand_value = "3";break;
+			case "31":$rand_value = "4";break;
+			case "32":$rand_value = "5";break;
+			case "33":$rand_value = "6";break;
+			case "34":$rand_value = "7";break;
+			case "35":$rand_value = "8";break;
+			case "36":$rand_value = "9";break;
+		}
+		return $rand_value;
+	}
+	
+	public function GetRandomStr($length)
+	{
+		if($length > 0) 
+		{ 
+			$rand_id = '';
+			for($i=1;$i<=$length;$i++)
+			{
+				mt_srand((double)microtime() * 1000000);
+				$num = mt_rand(1,36);
+				$rand_id.= $this->GetRandomLit($num);
+			}
+		}
+		return $rand_id;
+	}
+	
+	public function CheckImage($content)
+	{ 
+		$hex = array();
+		$hex[0] = "ff d8 ff e0 0 10 4a 46 49 46 0 1 1 0 0 1 0 1 0 0 ff db 0 43 0 6 4 4 4 5";
+		$hex[1] = "ff d8 ff e0 0 10 4a 46 49 46 0 1 1 0 0 1 0 1 0 0 ff db 0 43 0 3 3 3 3 3";
+
+		for($i=0;$i<count($hex);$i++)
+		{
+			if(substr($this->str2hex($content),1,strlen($hex[$i])) == $hex[$i])
+				return true;
+		}
+		return false;
+	}
+
+	public function Str2Hex($str)
+	{
+		$len = (strlen($str) < 255) ? strlen($str) : 255;
+		$output = '';
+		for($i=0;$i<=$len;$i++)
+		{
+			$output.= ' '.dechex(ord(substr($str,$i,1)));
+		}
+		return $output;
+	}
+	
+	public function ResizeImage($image_from,$image_to, $fitwidth=220,$fitheight=200,$quality=75)
+	{
+		$os = $originalsize = getimagesize($image_from);
+		if($originalsize[2] !=2 && $originalsize[2] !=3 && $originalsize[2] !=6 && ($originalsize[2] < 9 || $originalsize[2] > 12))
+			return false;
+		if($originalsize[0] > $fitwidth || $originalsize[1] > $fitheight)
+		{
+			$h = getimagesize($image_from);
+			if(($h[0]/$fitwidth) > ($h[1]/$fitheight))
+				$fitheight = $h[1]*$fitwidth/$h[0];
+			else
+				$fitwidth = $h[0]*$fitheight/$h[1];
+			if($os[2] == 2 || ($os[2] >= 9 && $os[2] <= 12))
+				$i = ImageCreateFromJPEG($image_from);
+			$o = ImageCreateTrueColor($fitwidth, $fitheight);
+			imagecopyresampled($o, $i, 0, 0, 0, 0, $fitwidth, $fitheight, $h[0], $h[1]);
+			imagejpeg($o, $image_to, $quality); 
+			chmod($image_to,0777);
+			imagedestroy($o);
+			imagedestroy($i);
+			return 2;
+		}
+		if($originalsize[0] <= $fitwidth && $originalsize[1] <= $fitheight)
+		{
+			$i = ImageCreateFromJPEG($image_from);
+			imagejpeg($i, $image_to, $quality); 
+			chmod($image_to, 0777);
+			return 1;
+		}
+	}
+	
+	public function LoadScreensById($id)
+	{
+		$cfg = new config;
+		$sql = new sql;
+		$text = '';
+		$query = $sql->exe($cfg->get("realmd"),"SELECT `address`,`mini` FROM `bt_screen` WHERE `entry` = '".$id."'");
+		while($row=$sql->fetch($query))
+		{
+			$text.= '<div align="center"><a href="screen/'.$row['address'].'" target="_blank"><img src="screen/'.$row['mini'].'"></a></div>';
+		}
+		return $text;
+	}
+	
 	public function SetStatus($statusid=-1,$id=-1)
 	{
 		$cfg = new config;
@@ -267,6 +395,14 @@ class main implements create
 			$text.='<option value="'.$row['id'].'">'.$row['name'].'</option>';
 		}
 		return $text;
+	}
+	
+	public function HasScreen($id)
+	{
+		$cfg = new config;
+		$sql = new sql;
+		$query = $sql->exe($cfg->get("realmd"),"SELECT 1 FROM `bt_screen` WHERE `entry` = '".$id."'");
+		return ($sql->num_rows($query) > 0) ? true : false;
 	}
 	
 	public function login($login,$pass)
@@ -373,6 +509,7 @@ class main implements create
 		$text = '';
 		while($row=$sql->fetch($opt))
 		{
+			$color = '#FFD100';
 			$exp2 = @explode($cfg->get("wd_quest"),$row['link']);
 			$exp3 = @explode($cfg->get("wd_item"),$row['link']);
 			$exp4 = @explode($cfg->get("wd_npc"),$row['link']);
@@ -387,6 +524,18 @@ class main implements create
 			{
 				if($cfg->get("lang") == 8){$tbl = 'locales_item';$field = 'name_loc8';}else{$tbl = 'item_template';$field = 'name';}
 				$tblt = $cfg->get("wd_item");
+				$id = explode($tblt,$row['link']);
+				$_color = $sql->res($cfg->get("mangos"),"SELECT `Quality` FROM `item_template` WHERE `entry` = '".$id[1]."'");
+				switch($_color)
+				{
+					case 0: $color = '#9D9D9D'; break;
+					case 1: $color = '#FFFFFF'; break;
+					case 2: $color = '#1EFF00'; break;
+					case 3: $color = '#0070DD'; break;
+					case 4: $color = '#A335EE'; break;
+					case 5: $color = '#FF8000'; break;
+					case 6: $color = '#E5CC80'; break;
+				}
 			}
 			else if(isset($exp4[1]))
 			{
@@ -403,7 +552,7 @@ class main implements create
 
 			$id = explode($tblt,$row['link']);
 			$name = $sql->res($cfg->get("mangos"),"SELECT `".$field."` FROM `".$tbl."` WHERE `entry` = '".$id[1]."'");
-			$text.= '<a href="'.$row['link'].'" target="_blank">'.$name.'</a><br>';
+			$text.= '<font color="'.$color.'">[<small><a href="'.$row['link'].'" target="_blank"><font color="'.$color.'">'.$name.'</font></a></small>]</font><br>';
 		}
 		return $text;
 	}

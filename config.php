@@ -31,6 +31,7 @@ class config
 		##		LinkPlayer:		Link to page on deatil view character or false if it is not necessary.
 		##		searchlimit:	Limit of query for search (query, creature, item, etc).
 		##		lang:			Translate search result to russian language? (8: russian, 1: english).
+		##		size_limit:		Limit (in bytes) on the size of the loaded image.
 		##################################################################################################*/
 		"title"			=> "Баг-трекер",
 		"mingm"			=> 3,
@@ -42,6 +43,7 @@ class config
 		"LinkPlayer"	=> "http://localhost/admin/player.php?guid=",
 		"searchlimit"	=> 17,
 		"lang"			=> 8,
+		"size_limit"	=> 500000,
 		/*##################################################################################################
 		## Admin settings
 		##		CheckVersion:	Check new version in git page of project (boolean).

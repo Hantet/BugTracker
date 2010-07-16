@@ -26,7 +26,13 @@ interface create
 	function GetPreviousElement($type,$change);
 	function SetStatus($statusid=-1,$id=-1);
 	function GetAdminReply($id);
+	function GetRandomLit($num);
+	function GetRandomStr($length);
+	function CheckImage($content);
+	function Str2Hex($str);
+	function ResizeImage($image_from,$image_to, $fitwidth=220,$fitheight=200,$quality=75);
 
+	function LoadScreensById($id);
 	function LoadZones();
 	function LoadChar($acc);
 	function LoadStatus($id="0");
@@ -39,6 +45,7 @@ interface create
 	function LoadComment($id);
 	function DeleteComment($id);
 
+	function HasScreen($id);
 	function login($login,$pass);
 	function cookies($login,$pass);
 	function AccountRepass($acc,$code);

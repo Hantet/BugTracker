@@ -1,5 +1,12 @@
 SET FOREIGN_KEY_CHECKS=0;
 
+CREATE TABLE `bt_screen` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`entry` int(11) NOT NULL,
+`address` varchar(25) NOT NULL,
+`mini` varchar(25) NOT NULL,
+PRIMARY KEY (`id`));
+
 CREATE TABLE `bt_comment` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
 `entry` int(11) NOT NULL,

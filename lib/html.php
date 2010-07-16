@@ -63,6 +63,18 @@ class body implements html
 		   <div class="pad">
 		    <div id="links"></div>
 		   </div>
+		   <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%">
+			<tr style="height:10px;"><td></td></tr>
+			<tr style="height:1px;background-color: #000;"><td></td></tr>
+			<tr style="height:5px;"><td></td></tr>
+		   </table>
+		   <div class="pad">Изображения (скриншоты):</div>
+		   <form name="form_iframe" id="form_iframe" action="addscreen.php" method="post" enctype="multipart/form-data" target="upload_target">
+		    <input name="myfile" type="file" style="width:220px;"><img src="img/add.png" title="Загрузить" style="position:relative;top:3px;cursor:pointer;" onClick="document.form_iframe.submit();" onMouseOver="this.src=\'img/onadd.png\'" onMouseOut="this.src=\'img/add.png\'">
+		   </form>
+		   <div id="screen_links" style="display:none;"></div>
+		   <div id="result"></div>
+		   <iframe id="upload_target" name="upload_target" src="#" style="width:0;height:0;border:0px;"></iframe>
 		  </td>
 		  <td width="1px" style="background-color: #000;"></td>
 		  <td valign="top">
@@ -140,6 +152,17 @@ class body implements html
 		if($all['text_3'])
 			$area3 = '<div class="pad">Пояснение:</div><textarea class="textarea" id="area3" READONLY>'.$all['text_3'].'</textarea>';
 
+		if($main->HasScreen($all['id']))
+			$scr = '
+			<table border="0" cellpadding="0" cellspacing="0" align="center" width="100%">
+			 <tr style="height:10px;"><td></td></tr>
+			 <tr style="height:1px;background-color: #000;"><td></td></tr>
+			 <tr style="height:5px;"><td></td></tr>
+			</table>
+			<div class="pad">Изображения (скриншоты):</div><br><div id="result">'.$main->LoadScreensById($all['id']).'</div>';
+		else
+			$scr = '';
+
 		echo '<script>detail_view=true;</script>';
 		$text = '
 		<table height="100%" border="0" cellpadding="0" cellspacing="0" align="left">
@@ -171,11 +194,13 @@ class body implements html
 		     <td class="block2" valign="top">Зона: </td>
 		     <td class="block3" align="right">'.$main->GetZone($all['zone']).'</td>
 		    </tr>
-			<tr style="height:10px;"><td></td><td></td></tr>
-			<tr style="height:1px;background-color: #000;"><td></td><td></td></tr>
-			<tr style="height:5px;"><td></td><td></td></tr>
 		   </table>
-		   <div class="pad">Ссылки:<div align="right">'.$main->LoadView($opt).'</div></div>
+		   <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%">
+			<tr style="height:10px;"><td></td></tr>
+			<tr style="height:1px;background-color: #000;"><td></td></tr>
+			<tr style="height:5px;"><td></td></tr>
+		   </table>
+		   <div class="pad">Ссылки:<div align="right">'.$main->LoadView($opt).'</div></div>'.$scr.'
 		  </td>
 		  <td width="1px" style="background-color: #000;"></td>
 		  <td valign="top" width="365px">
