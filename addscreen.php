@@ -27,7 +27,7 @@ if(@move_uploaded_file($_FILES['myfile']['tmp_name'], $target_path))
 	}
 
 	$m_name = $newname;
-	$m_mini = $main->GetRandomStr(16).'.jpg';
+	$m_mini = $main->GetRandomStr(16).'.'.$exp[1];
 	$m_size = $_FILES['myfile']['size'];
 
 	$main->ResizeImage($target_path,$path.$m_mini,160,200,75);
