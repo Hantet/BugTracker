@@ -5,13 +5,13 @@ class config
 	{
 		$arr = array(
 		/*##################################################################################################
-		## Connect to database
-		##		dbhost:			IP-address or domain name where is started server MySQL.
-		##		dbuser:			Username for connect to server MySQL.
-		##		dbpass:			Password for connect to server MySQL.
-		##		mangos:			Name database of world.
-		##		realmd:			Name database of account.
-		##		characters:		Name database of characters.
+		## Подключение к базе данных
+		##		dbhost:			IP-адрес или доменное имя, где запущен сервер MySQL.
+		##		dbuser:			Имя пользователя для подключения к серверу MySQL.
+		##		dbpass:			Пароль пользователя для подключения к серверу MySQL.
+		##		mangos:			Имя базы данных игрового мира (обычно: mangos).
+		##		realmd:			Имя базы данных учётных записей (обычно: realmd).
+		##		characters:		Имя базы данных перснажей (обычно: characters).
 		##################################################################################################*/
 		"dbhost"		=> "localhost",
 		"dbuser"		=> "mangos",
@@ -20,18 +20,18 @@ class config
 		"realmd"		=> "realmd",
 		"characters"	=> "characters",
 		/*##################################################################################################
-		## Site sittings
-		##		title:			Name of site (viewing in tag <title></title> on main page).
-		##		mingm:			Minimum security level for access in adminpanel.
-		##		pagepath:		Folder on a site where there are executing files.
-		##		main:			IP-address or domain name of site.
-		##		progressbar:	Display progress bar in list-page (boolean).
-		##		anim:			Animation progress-bar in list-page (boolean).
-		##		LinkAccount:	Link to page on deatil view account or false if it is not necessary.
-		##		LinkPlayer:		Link to page on deatil view character or false if it is not necessary.
-		##		searchlimit:	Limit of query for search (query, creature, item, etc).
-		##		lang:			Translate search result to russian language? (8: russian, 1: english).
-		##		size_limit:		Limit (in bytes) on the size of the loaded image.
+		## Настройки сайта
+		##		title:			Название Баг-трекера (отображается между тегами <title></title>).
+		##		mingm:			Минимальный уровень доступа для входа в админпанель.
+		##		pagepath:		Папка на сайте где находятся исполняющие файлы.
+		##		main:			IP-адрес или доменное имя сайта.
+		##		progressbar:	Отображение прогресс-баров на страницах со списками (булева перменная).
+		##		anim:			Анимация прогресс-баров на страницах со списками (булева перменная).
+		##		LinkAccount:	Ссылка на страницу детального просмотра учётной записи, или false если ссылка не нужна.
+		##		LinkPlayer:		Ссылка на страницу детального просмотра персонажа, или false если ссылка не нужна.
+		##		searchlimit:	Ограничение на количество выводимых результатов поиска.
+		##		lang:			Язык выводимых результатов (8: русский, 1: английский).
+		##		size_limit:		Ограничение (в байтах) на размер загружаемых изображений.
 		##################################################################################################*/
 		"title"			=> "Баг-трекер",
 		"mingm"			=> 3,
@@ -45,28 +45,31 @@ class config
 		"lang"			=> 8,
 		"size_limit"	=> 500000,
 		/*##################################################################################################
-		## Admin settings
-		##		CheckVersion:	Check new version in git page of project (boolean).
-		##		version:		Current version of bug-tracker. Do not change!
-		##		checkdiff:		Different in days for recheck updates.
-		##		installquery:	Count of query for install. Do not change!
+		## Настройки администрирования
+		##		CheckVersion:	Проверять страницу проекта на github на предмет выхода обновлпений.
+		##		version:		Текущая версия баг-трекера. Не изменяйте!
+		##		checkdiff:		Интервал в днях для повторной проверки обновлений.
+		##		installquery:	Количество запросов в базу данных при установке. Не изменяйте!
 		##################################################################################################*/
 		"CheckVersion"	=> false,
-		"version"		=> 37,
+		"version"		=> 38,
 		"checkdiff"		=> 2,
 		"installquery"	=> 215,
 		/*##################################################################################################
-		## Outer resources
-		##		Database:		Link to the wow database site. Default: http://ru.wowhead.com/.
-		##		wd_quest:		http://ru.wowhead.com/quest=. Default: quest.
-		##		wd_item:		http://ru.wowhead.com/item=. Default: item.
-		##		wd_npc:			http://ru.wowhead.com/npc=. Default: npc.
-		##		wd_object:		http://ru.wowhead.com/object=. Default: object.
+		## Внешние ресурсы
+		##		Database:		Ссылка на базу данных wow (по умолчанию: http://ru.wowhead.com/).
+		##		wd_quest:	 	Параметр, указывающий на область поика по квестам по сайту базы данных wow.
+		##		wd_item:		Параметр, указывающий на область поика по предметам по сайту базы данных wow.
+		##		wd_npc:			Параметр, указывающий на область поика по НИП-ам по сайту базы данных wow.
+		##		wd_object:		Параметр, указывающий на область поика по объектам по сайту базы данных wow.
 		##
-		##		Example:		http://wowdata.ru/item.html?id=26051
+		##						Пример 1:
+		##						Если http://ru.wowhead.com/, то ссыка на квест будет выглядеть так:
+		##						http://ru.wowhead.com/quest=12345. quest= - необходимый параметр.
 		##
-		##						"http://wowdata.ru/" - is Database.
-		##						"item.html?id=" - is wd_item.
+		##						Пример 2:
+		##						Если http://wowdata.ru/, то ссылка на предмет будет выглядеть так:
+		##						http://wowdata.ru/item.html?id=12345. item.html?id= - необходимый параметр.
 		*/##################################################################################################
 		"Database"		=> "http://ru.wowhead.com/",
 		"wd_quest"		=> "quest=",

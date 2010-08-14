@@ -479,7 +479,7 @@ class body implements html
 		echo '
 		<table class="t0" '.$id.' cellpadding="0" cellspacing="0" align="center" style="'.$style.'">
 		 <tr>
-		  <td class="'.$subclass.'">'.$text.'</td>
+		  <td style="color:#FFFFFF;padding:5px;" class="'.$subclass.'">'.$text.'</td>
 		 </tr>
 		</table>';
 	}
@@ -755,7 +755,7 @@ class body implements html
 	public function install()
 	{
 		$main = new main;
-		$this->block('Здравствуйте!<br><br>Для работы баг-трекера требуется создать несколько таблиц в базе данных.<br><a href="install.php">Начать установку!</a>');
+		$this->blocknot('Здравствуйте!<br><br>Для работы баг-трекера требуется создать несколько таблиц в базе данных.<br><a href="install.php">Начать установку!</a>');
 	}
 	public function inject($code)
 	{
